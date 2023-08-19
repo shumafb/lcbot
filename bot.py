@@ -1,10 +1,14 @@
 import asyncio
 import logging
 from aiogram import Bot, Dispatcher, types
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.filters.command import Command
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram import F
 from aiogram.fsm.state import StatesGroup, State
+from aiogram.fsm.context import FSMContext
+import yapi
+import kb
 
 logging.basicConfig(level=logging.INFO)
 
@@ -13,65 +17,61 @@ API_TOKEN = "6636532520:AAGQKEOSpqJjWdikdzCR8qOHwp2WjLx3N44"
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
-class SetOperator(StatesGroup):
-    choose_operator = State()
+mnc_operator = {'mts': '1', 'megafon': '2', 't2': '25', 'beeline': '99'}
+
+class SetData(StatesGroup):
+    ch_operator = State()
+    ch_laccid = State()
 
 
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message):
     """Вступительное сообещние по нажатию /start"""
     builder = InlineKeyboardBuilder()
-    builder.row(types.InlineKeyboardButton(
+    builder.row(InlineKeyboardButton(
                 text= "🪙 БС",
-                callback_data= 'bs_info',
-    ))
-    await message.answer("Я бот-помощник. Информацию по командам смотри в /help", reply_markup=builder.as_markup())
-
-
-@dp.message(Command("help"))
-async def help_info(message: types.Message):
-    """Предоставляет информацию по команде /help"""
-    await message.answer("/bs - получить информацию по БС\n"
-                         "/ping - отправить ping SMS\n"
-                         "/hlr - отправить hlr-запрос\n"
-                         "/kody - проверка номера через Kody.su"
-                         )
-
-
-def get_keyboard():
-    operator_buttons = [
-        [
-            types.InlineKeyboardButton(text = '🔴 МТС', callback_data='operator_mts'),
-            types.InlineKeyboardButton(text = '🟢 Мегафон', callback_data='operator_megafon'),
-            types.InlineKeyboardButton(text = '⚫️ Теле2', callback_data='operator_t2'),
-            types.InlineKeyboardButton(text = '🟡 Билайн', callback_data='operator_beeline'),
-        ]
-    ]
-    keyboard = types.InlineKeyboardMarkup(inline_keyboard=operator_buttons)
-    return keyboard
+                callback_data= 'bs_info',),
+                InlineKeyboardButton(
+                text= "📱 Телефон",
+                callback_data= 'phone_info'),
+    )
+    await message.answer("Выберите объект взаимодействия:", reply_markup=builder.as_markup())
 
 
 @dp.callback_query(F.data == 'bs_info')
-async def send_bs_info(callback: types.CallbackQuery):
+async def send_bs_info(callback: types.CallbackQuery, state: FSMContext):
     """Выбор оператора и кода mnc"""
-    await callback.message.answer('Выбери оператора:', reply_markup=get_keyboard())
+    await callback.message.answer('Выбери оператора:', reply_markup=kb.get_keyboard())
+    await state.set_state(SetData.ch_operator)
+
 
 @dp.callback_query(F.data.startswith('operator_'))
-async def set_mnc_operator(callback: types.CallbackQuery):
+async def set_mnc_operator(callback: types.CallbackQuery, state: FSMContext):
     """Сохраняет в памяти MNC оператора"""
-    mnc_operator = None
 
     action = callback.data.split('_')[1]
 
     if action == 'mts':
-        mnc_operator = '1'
+        await state.update_data(mnc=mnc_operator.get('mts'))
     elif action == 'megafon':
-        mnc_operator = '2'
+        await state.update_data(mnc=mnc_operator.get('megafon'))
     elif action == 't2':
-        mnc_operator = '25'
+        await state.update_data(mnc=mnc_operator.get('t2'))
     elif action == 'beeline':
-        mnc_operator = '99'
-    await callback.message.answer('Введите LAC CID базовой станции через пробел (Для ввода списком, используйте новую строку для каждой БС)')
+        await state.update_data(mnc=mnc_operator.get('beeline'))
+    await callback.message.answer('Введите LAC CID базовой станции через пробел \nДля ввода списком, используйте новую строку для каждой БС')
+    
+    await state.set_state(SetData.ch_laccid)
+
+@dp.message(SetData.ch_laccid, F.text.regexp(r"^\d{1,9} \d+$"))
+async def api_locator(message: types.Message, state: FSMContext):
+    user_data = await state.get_data()
+    bs = message.text.split(" ")
+    lac = bs[0]
+    cid = bs[1]
+    mnc = user_data['mnc']
+    print(yapi.push_api(lac=lac, cid=cid, mnc=mnc))
+    await message.answer(yapi.push_api(lac=lac, cid=cid, mnc=mnc))
 
 
 async def main():
