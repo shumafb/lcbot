@@ -17,7 +17,7 @@ def get_keyboard():
 def ph_menu(phone):
     phone_menu_buttons = [
         [
-        InlineKeyboardButton(text='☎️ Kody.su', callback_data='phmenu_kody'),
+        # InlineKeyboardButton(text='☎️ Kody.su', callback_data='phmenu_kody'),
         # InlineKeyboardButton(text='📞 GetContact', callback_data='phmenu_getcontact'),
         InlineKeyboardButton(text='📩 SMSC', callback_data="phmenu_smsc"),
         InlineKeyboardButton(text='🟢 WhatsApp', url=f'https://wa.me/+7{phone}'),

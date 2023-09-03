@@ -13,11 +13,13 @@ def get_balance():
 
 def send_ping(phone):
     ping = smsc.send_sms(f"7{phone}", "", format=6)
+    print(ping)
     return ping
 
 
 def update_ping(ping, phone):
     info = update_status(id=ping[0], phone=phone)
+    print(info)
     return info
 
 

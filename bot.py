@@ -7,9 +7,8 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram import F
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.fsm.context import FSMContext
-import yapi
-import kb
-import smsc
+import yapi, kb, smsc, num
+
 
 logging.basicConfig(level=logging.INFO)
 
@@ -101,17 +100,12 @@ async def menu_phone(message: types.Message, state: FSMContext):
     await state.update_data(phone=message.text)
     ph = await state.get_data()
     phone = ph["phone"][-10:]
-
+    info = num.check_phone(phone)
+    
     await message.answer(
-        f"Номер: {phone} \n Выберите взаимодействие с одним из сервисов:             ",
-        reply_markup=kb.ph_menu(phone=phone),
-    )
+        f"Номер: {phone} \nОператор: {info['operator']}\nРегион: {info['region']}\nВыберите взаимодействие с одним из сервисов:  ",
+        reply_markup=kb.ph_menu(phone=phone))
     await state.set_state(SetData.ph_menu)
-
-
-@dp.callback_query(F.data == "phmenu_kody")
-async def kody_phone(callback: types.CallbackQuery, state: FSMContext):
-    await callback.message.answer("Функционал скоро появится")
 
 
 @dp.callback_query(F.data == "phmenu_smsc")
