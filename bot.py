@@ -1,13 +1,13 @@
 import asyncio
 import logging
 from aiogram import Bot, Dispatcher, types
-from aiogram.types import InlineKeyboardButton
+from aiogram.types import InlineKeyboardButton, FSInputFile
 from aiogram.filters.command import Command
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram import F
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.fsm.context import FSMContext
-import yapi, kb, smsc, num
+import yapi, keyboards.kb as kb, smsc, num, html_parse
 
 
 logging.basicConfig(level=logging.INFO)
@@ -80,9 +80,12 @@ async def api_locator(message: types.Message, state: FSMContext):
     lac = bsinfo[0]
     cid = bsinfo[1]
     mnc = user_data["mnc"]
-    print(yapi.push_api(lac=lac, cid=cid, mnc=mnc))
-    await message.answer(yapi.push_api(lac=lac, cid=cid, mnc=mnc))
-
+    bsinfo = yapi.push_api(lac=lac, cid=cid, mnc=mnc)
+    html_parse.constructor(bslist=bsinfo)
+    # with open('test2.html', 'r', encoding='utf-8') as file:
+    #     print(file.read())
+    document = FSInputFile('test2.html', filename='map.html')
+    await bot.send_document(chat_id=message.chat.id, document=document)
 
 # Взаимодействие с номером телефона
 @dp.callback_query(F.data == "phone_info")
