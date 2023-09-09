@@ -7,7 +7,7 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram import F
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.fsm.context import FSMContext
-import yapi, keyboards.kb as kb, smsc, num, html_parse
+import yapi, kb as kb, smsc, num, html_parse
 
 
 logging.basicConfig(level=logging.INFO)
