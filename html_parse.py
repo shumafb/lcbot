@@ -44,7 +44,6 @@ def constructor(bslist):
     count = 0
     for bs in bslist:
         operator_color = operators[int(bs['operator'])]
-        print(operator_color)
         circles.append(
             f"    L.circle(coords{count}, {{color: '{operator_color}', fillcolor: '{operator_color}', fillOpacity: 0.5, radius: {bs['radius']}}}).addTo(map);"
         )

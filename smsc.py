@@ -1,4 +1,3 @@
-import asyncio
 from smsc_api import *
 
 smsc = SMSC()
@@ -23,18 +22,18 @@ def update_ping(ping, phone):
     return info
 
 
+def update_status(id, phone):
+    return smsc.get_status(id=id, phone=f"7{phone},", all=1)
+
+
 def pretty_update_ping(info):
     print(info)
-    return f"Ping SMS отправлен на номер {info[4]} \nСтоимость {info[5]} \nСтатус: {info[7]} \nДля обновления статуса нажмите кнопку 'Обновить'"
+    return f"Ping SMS отправлен на номер {info[4]} \nСтоимость {info[5]} \nСтатус: {info[7]} \nБаланс: <b>{get_balance()}</b>\nДля обновления статуса нажмите кнопку 'Обновить'"
 
 
 def send_hlr(phone):
     hlr = smsc.send_sms(f"7{phone}", "", format=3)
     print(hlr)
     info = update_status(id=hlr[0], phone=phone)
-    return f"HLR-запрос отправлен на номер: {info[12]} \nСтоимость {info[13]}\n Статус: {info[14]}"
-
-
-def update_status(id, phone):
-    return smsc.get_status(id=id, phone=f"7{phone},", all=1)
-
+    print(info)
+    return f"HLR-запрос к номеру: <b>{info[12]}</b> \nСтатус: {info[15]}\nБаланс: <b>{get_balance()} руб</b>"

@@ -12,6 +12,7 @@ except ImportError:
 	from urllib.parse import quote
 
 # Константы для настройки библиотеки
+global SMSC_LOGIN
 SMSC_LOGIN = "vjobivay"			# логин клиента
 SMSC_PASSWORD = "vjob123smsC"	# пароль
 SMSC_POST = False				# использовать метод POST

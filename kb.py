@@ -18,8 +18,10 @@ def ph_menu(phone):
     phone_menu_buttons = [
         [
         # InlineKeyboardButton(text='📞 GetContact', callback_data='phmenu_getcontact'),
-        InlineKeyboardButton(text='🏳️ Ping SMS', callback_data='smsc_ping'),
-        InlineKeyboardButton(text='📩 HLR-запрос', callback_data="smsc_hlr"),
+        InlineKeyboardButton(text='📧 Ping SMS', callback_data='smsc_ping'),
+        InlineKeyboardButton(text='💌 HLR-запрос', callback_data="smsc_hlr"),
+        ],
+        [
         InlineKeyboardButton(text='🟢 WhatsApp', url=f'https://wa.me/+7{phone}'),
         InlineKeyboardButton(text='🔵 Telegram', url=f'https://t.me/+7{phone}'),
         ]
@@ -31,7 +33,7 @@ def ph_menu(phone):
 def update_ping():
     '''Кнопка для взаимодействия с ping-запросом'''
     update_button = [
-        InlineKeyboardButton(text='♻️ Обновить', callback_data='update_ping')
+        InlineKeyboardButton(text='🔄 Обновить', callback_data='update_ping')
     ]
     keyboard = InlineKeyboardMarkup(inline_keyboard=update_button)
     return keyboard
