@@ -1,4 +1,8 @@
-2023-09-09 19:42:26,734 INFO Start polling
-2023-09-09 19:42:26,812 INFO Run polling for bot @lacatorbot id=6636532520 - 'Бот'
-2023-09-09 19:42:32,857 INFO Update id=839843167 is handled. Duration 427 ms by bot id=6636532520
-2023-09-09 19:42:35,787 INFO Update id=839843168 is handled. Duration 135 ms by bot id=6636532520
+2023-09-10 13:03:53,393 INFO An Info
+2023-09-10 13:03:53,393 ERROR An Error
+2023-09-10 13:03:53,969 INFO Start polling
+2023-09-10 13:03:54,067 INFO Run polling for bot @lacatorbot id=6636532520 - 'Бот'
+2023-09-10 13:04:05,906 INFO Update id=839843169 is handled. Duration 322 ms by bot id=6636532520
+2023-09-10 13:04:10,798 INFO Update id=839843170 is handled. Duration 238 ms by bot id=6636532520
+2023-09-10 13:04:13,154 INFO Update id=839843171 is handled. Duration 347 ms by bot id=6636532520
+2023-09-10 13:04:15,493 INFO Update id=839843172 is handled. Duration 164 ms by bot id=6636532520

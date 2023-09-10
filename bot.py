@@ -6,12 +6,13 @@ from aiogram import Bot, Dispatcher, F
 from aiogram.filters.command import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
-from aiogram.types import FSInputFile, Message, CallbackQuery
+from aiogram.types import CallbackQuery, FSInputFile, Message
 
 import html_parse
 import kb
 import num
-import smsc, smsc_api
+import smsc
+import smsc_api
 import yapi
 
 logging.basicConfig(level=logging.INFO, filename="log/py_bot.log", filemode='w', format="%(asctime)s %(levelname)s %(message)s")
@@ -31,8 +32,6 @@ mnc_operator = {"mts": "1", "megafon": "2", "t2": "25", "beeline": "99"}
 
 
 class SetData(StatesGroup):
-    ch_operator = State()
-    ch_laccid = State()
     ph_get = State()
     ph_menu = State()
     ph_smsc = State()
@@ -41,14 +40,7 @@ class SetData(StatesGroup):
 @dp.message(Command("start"))
 async def cmd_start(message: Message):
     """Вступительное сообещние по нажатию /start"""
-    # builder = InlineKeyboardBuilder()
-    # builder.row(
-    #     InlineKeyboardButton(
-    #         text="📡 БС",
-    #         callback_data="bs_info",
-    #     ),
-    #     InlineKeyboardButton(text="📱 Телефон", callback_data="phone_info"),
-    # )
+    # if message.from_user.id != 
     await message.answer(
         "Введите объект взаимодействия \nили команду /help для вывода информации по боту",  # reply_markup=builder.as_markup()
     )
@@ -84,9 +76,8 @@ async def cmd_start(message: Message):
 
 
 @dp.message(F.text.regexp(r"^(1|01|2|02|25|99) (\d{1,8}) (\d+)"))
-async def api_locator(message: Message, state: FSMContext):
+async def api_locator(message: Message):
     """Принимает mnc lac cid от пользователя и направляет аргументы в Яндекс.Локатор"""
-    state_info = await state.get_data()
     bs_info = message.text.split("\n")
     bs_list = []
     yapi_info = []
@@ -189,6 +180,7 @@ async def cmd_help(message: Message):
                          "└ 🔵 Telegram - переход в Telegram\n\n" + \
                          "📡 <b>Поиск по базовой станции</b>\n" + \
                          "├ 📝 <b>MNC LAC CID</b> - ПРИМЕР\n" + \
+                         "├ ℹ️ Возможна работа со <b>списками БС</b>"
                          "├ ℹ️ MNC - 01, 1, 02, 2, 25, 99\n" + \
                          "├ ℹ️ LAC - До 8 цифр\n" + \
                          "├ ℹ️ CID - Неограниченное количество цифр\n" + \
