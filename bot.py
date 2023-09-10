@@ -23,6 +23,12 @@ logging.error('An Error')
 with open("source/info.json", "r", encoding="utf-8") as file:
     file = json.load(file)
 
+with open('source/id_list.txt', 'r', encoding='utf-8') as idlist:
+    idlist = idlist.read()
+    idlist = idlist.split('\n')
+    idlist = list(map(int, idlist))
+
+
 API_TOKEN = file["telegram_token"]
 
 bot = Bot(token=API_TOKEN)
@@ -36,11 +42,11 @@ class SetData(StatesGroup):
     ph_menu = State()
     ph_smsc = State()
 
-
 @dp.message(Command("start"))
 async def cmd_start(message: Message):
     """Вступительное сообещние по нажатию /start"""
-    # if message.from_user.id != 
+    if message.from_user.id not in idlist:
+        return message.answer('Нет доступа')
     await message.answer(
         "Введите объект взаимодействия \nили команду /help для вывода информации по боту",  # reply_markup=builder.as_markup()
     )
@@ -75,9 +81,11 @@ async def cmd_start(message: Message):
 #     await state.set_state(SetData.ch_laccid)
 
 
-@dp.message(F.text.regexp(r"^(1|01|2|02|25|99) (\d{1,8}) (\d+)"))
+@dp.message(F.text.regexp(r"^(1|2|25|99) (\d{1,8}) (\d+)"))
 async def api_locator(message: Message):
     """Принимает mnc lac cid от пользователя и направляет аргументы в Яндекс.Локатор"""
+    if message.from_user.id not in idlist:
+        return message.answer('Нет доступа')
     bs_info = message.text.split("\n")
     bs_list = []
     yapi_info = []
@@ -112,14 +120,15 @@ async def api_locator(message: Message):
 @dp.message(F.text.regexp(r"^(\+7|7|8|)?\d{10}"))
 async def menu_phone(message: Message, state: FSMContext):
     """Меню взаимодействия с аб.номером"""
+    if message.from_user.id not in idlist:
+        return message.answer('Нет доступа')
     await state.update_data(phone=message.text)
     phone = message.text[-10:]
     info = num.check_phone(phone)
-    print(info)
 
     await message.answer(
         f"Номер: <b>{phone}</b> \nОператор: {info['operator']}\nРегион: {info['region']}\n"
-        + f"\nБаланс SMSC: <b>{smsc.get_balance()} руб</b>\nВозможность HLR-запроса: {'🔴' if info['operator'] == 'Мегафон' else '🟢'}\n\nВыберите взаимодействие с одним из сервисов:  ",
+        + f"\nБаланс SMSC: <b>{smsc.get_balance()} руб</b>\nВозможность HLR-запроса: {'🔴' if info['operator'].lower() in 'мегафон' else '🟢'}\n\nВыберите взаимодействие с одним из сервисов:  ",
         reply_markup=kb.ph_menu(phone=phone),
         parse_mode="HTML",
     )
@@ -170,18 +179,20 @@ async def update_ping(callback: CallbackQuery, state: FSMContext):
 
 @dp.message(Command("help"))
 async def cmd_help(message: Message):
+    if message.from_user.id not in idlist:
+        return message.answer('Нет доступа')
     await message.answer("<b>Примеры команд для ввода:</b>\n\n" + \
                          "📱 <b>Поиск по номеру телефона</b>\n" + \
                          "├ 📝 <b>79994492792</b> - ПРИМЕР\n" + \
-                         "├ ℹ️ Любой формат (+7..., 8..., 7..., 9...)\n" + \
+                         "├ ℹ️ Любой формат (+7..., 8..., 9...)\n" + \
                          "├ 📧 Ping SMS - отправка Ping SMS\n" + \
                          "├ 💌 HLR - отправка HLR-запроса\n" + \
                          "├ 🟢 WhatsApp - переход в WhatsApp\n" + \
                          "└ 🔵 Telegram - переход в Telegram\n\n" + \
                          "📡 <b>Поиск по базовой станции</b>\n" + \
                          "├ 📝 <b>MNC LAC CID</b> - ПРИМЕР\n" + \
-                         "├ ℹ️ Возможна работа со <b>списками БС</b>"
-                         "├ ℹ️ MNC - 01, 1, 02, 2, 25, 99\n" + \
+                         "├ ℹ️ Возможность работы со <b>списками БС</b>\n"
+                         "├ ℹ️ MNC - 1, 2, 25, 99\n" + \
                          "├ ℹ️ LAC - До 8 цифр\n" + \
                          "├ ℹ️ CID - Неограниченное количество цифр\n" + \
                          "└ 🗺️ Отображение координат <b>Базовых Станций</b>",
@@ -191,14 +202,20 @@ async def cmd_help(message: Message):
 
 @dp.message(Command('balance'))
 async def cmd_balance(message: Message):
+    if message.from_user.id not in idlist:
+        return message.answer('Нет доступа')
     await message.answer(f"Привет, {smsc_api.SMSC_LOGIN}!\nБаланс SMSC: <b>{smsc.get_balance()} руб</b>", parse_mode="HTML")
 
 @dp.message(Command('id'))
 async def cmd_get_id(message:Message):
+    if message.from_user.id not in idlist:
+        return message.answer('Нет доступа')
     await message.answer(f"Твой Telegram ID: `{message.from_user.id}`", parse_mode="Markdown")
 
 @dp.message(F.text.regexp(r"."))
 async def try_again(message: Message):
+    if message.from_user.id not in idlist:
+        return message.answer('Нет доступа')
     await message.answer('Запрос не распознан\nПопробуйте снова\nили введите команду /help')
 
 # ЗАПУСК БОТА
