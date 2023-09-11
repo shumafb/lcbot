@@ -30,7 +30,7 @@ def ph_menu(phone):
     return keyboard
 
 
-def update_ping():
+def update_status():
     '''Кнопка для взаимодействия с ping-запросом'''
     update_button = [
         InlineKeyboardButton(text='🔄 Обновить', callback_data='update_ping')

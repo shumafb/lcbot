@@ -11,15 +11,15 @@
 <div id="map" style="width: 100%; height: 800px;"></div>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script id="locatorbs">
-    var map = L.map('map').setView([45.052673, 39.023155], 13);
+    var map = L.map('map').setView([44.596149, 40.111164], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href=http://www.openstreetmap.org/copyright>OpenStreetMap</a>'
     }).addTo(map);
 
-    var coords0 = [45.052673, 39.023155];
+    var coords0 = [44.596149, 40.111164];
 
     L.marker(coords0).bindPopup(coords0[0] + ', ' + coords0[1]).addTo(map);
 
-    L.circle(coords0, {color: 'red', fillcolor: 'red', fillOpacity: 0.5, radius: 421.6220397949219}).addTo(map);</script>
+    L.circle(coords0, {color: 'yellow', fillcolor: 'yellow', fillOpacity: 0.5, radius: 565.4846801757812}).addTo(map);</script>
 </body>
 </html>

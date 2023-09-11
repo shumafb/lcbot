@@ -15,7 +15,8 @@ import smsc
 import smsc_api
 import yapi
 
-logging.basicConfig(level=logging.INFO, filename="log/py_bot.log", filemode='w', format="%(asctime)s %(levelname)s %(message)s")
+# logging.basicConfig(level=logging.INFO, filename="log/py_bot.log", filemode='w', format="%(asctime)s %(levelname)s %(message)s")
+logging.basicConfig(level=logging.INFO)
 logging.info('An Info')
 logging.error('An Error')
 
@@ -152,13 +153,14 @@ async def smsc_action(callback: CallbackQuery, state: FSMContext):
     phone = ph["phone"][-10:]
 
     action = callback.data.split("_")[1]
+    print(action, 'action')
 
     if action == "ping":
-        ping = smsc.send_ping(phone=phone)
+        ping = await smsc.send_ping(phone=phone)
         await state.update_data(ping=ping)
         await callback.message.answer(
             smsc.pretty_update_ping(smsc.update_ping(ping=ping, phone=phone)),
-            reply_markup=kb.update_ping,
+            reply_markup=kb.update_status,
             parse_mode="HTML",
         )
     elif action == "hlr":
@@ -168,13 +170,18 @@ async def smsc_action(callback: CallbackQuery, state: FSMContext):
 @dp.callback_query(F.data == "update_ping")
 async def update_ping(callback: CallbackQuery, state: FSMContext):
     ph = await state.get_data()
+    print(ph, 'ph_info')
     phone = ph["phone"][-10:]
+    print(phone, "phone")
     ping = ph["ping"]
+    update_ping_info = await smsc.update_ping(ping, phone)
+    print(update_ping_info)
+    print(pretty_update_ping(update_ping_info))
 
     # await Bot.edit_message_text(smsc.pretty_update_ping(update_ping(ping, phone)), callback.message.chat.id, callback.message.message_id)
     await callback.message.answer(
-        smsc.pretty_update_ping(update_ping(ping, phone)),
-        reply_markup=kb.update_ping,
+        smsc.pretty_update_ping(update_ping_info),
+        reply_markup=kb.update_status,
         parse_mode="HTML")
 
 @dp.message(Command("help"))
@@ -208,8 +215,8 @@ async def cmd_balance(message: Message):
 
 @dp.message(Command('id'))
 async def cmd_get_id(message:Message):
-    if message.from_user.id not in idlist:
-        return message.answer('Нет доступа')
+    # if message.from_user.id not in idlist:
+    #     return message.answer('Нет доступа')
     await message.answer(f"Твой Telegram ID: `{message.from_user.id}`", parse_mode="Markdown")
 
 @dp.message(F.text.regexp(r"."))
