@@ -14,6 +14,8 @@ import num
 import smsc
 import smsc_api
 import yapi
+import db
+import alg_luhn
 
 # logging.basicConfig(level=logging.INFO, filename="log/py_bot.log", filemode='w', format="%(asctime)s %(levelname)s %(message)s")
 logging.basicConfig(level=logging.INFO)
@@ -122,7 +124,7 @@ async def api_locator(message: Message):
 #     await state.set_state(SetData.ph_get)
 
 
-@dp.message(F.text.regexp(r"^(\+7|7|8|)?\d{10}"))
+@dp.message(F.text.regexp(r"^(\+7|7|8|)?\d{10}^"))
 async def menu_phone(message: Message, state: FSMContext):
     """Меню взаимодействия с аб.номером"""
     if message.from_user.id not in idlist:
@@ -179,57 +181,54 @@ async def smsc_action(callback: CallbackQuery, state: FSMContext):
     #         parse_mode="HTML",
     #     )
 
-
-    if action == 'ping':
+    if action == "ping":
         loop = asyncio.get_event_loop()
         result = await loop.run_in_executor(None, smsc.send_ping, phone)
-        print(result, 'hlr_id', type(result))
+        print(result, "hlr_id", type(result))
         await state.update_data(sms_id=result)
         await callback.message.answer(
             f'Ping-запрос на номер <b>{phone}</b> отправлен\n Для обновления статуса нажмите кнопку "Обновить"',
             reply_markup=kb.update_ping_status(),
-            parse_mode="HTML"
-            )
+            parse_mode="HTML",
+        )
 
-    elif action == 'hlr':
+    elif action == "hlr":
         loop = asyncio.get_event_loop()
         result = await loop.run_in_executor(None, smsc.send_hlr, phone)
-        print(result, 'hlr_id', type(result))
         await state.update_data(sms_id=result)
         await callback.message.answer(
-            f'HLR-запрос на номер <b>{phone}</b> отправлен\n Для обновления статуса нажмите кнопку "Обновить"',
+            f'HLR-запрос на номер <b>{phone}</b> отправлен\nДля обновления статуса нажмите кнопку "Обновить"',
             reply_markup=kb.update_hlr_status(),
-            parse_mode="HTML"
-            )
+            parse_mode="HTML",
+        )
 
 
-@dp.callback_query(F.data == 'update_ping_sms_status')
-async def  update_status(callback: CallbackQuery, state: FSMContext):
+@dp.callback_query(F.data == "update_ping_sms_status")
+async def update_status(callback: CallbackQuery, state: FSMContext):
     set_info = await state.get_data()
-    phone = set_info['phone'][-10:]
-    sms_id = set_info['sms_id']
+    phone = set_info["phone"][-10:]
+    sms_id = set_info["sms_id"]
     loop = asyncio.get_event_loop()
     info = await loop.run_in_executor(None, smsc.update_status, sms_id, phone)
-    print(info)
     await callback.message.answer(
         f"Ping-запрос к номеру: <b>{info[4]}</b> \nСтоимость {info[5]} руб\nСтатус: {info[7]}\nБаланс: <b>{smsc.get_balance()} руб</b>\nДля обновления статуса нажмите кнопку 'Обновить'",
         reply_markup=kb.update_ping_status(),
-        parse_mode='HTML'
+        parse_mode="HTML",
     )
 
 
-@dp.callback_query(F.data == 'update_hlr_sms_status')
-async def  update_status(callback: CallbackQuery, state: FSMContext):
+@dp.callback_query(F.data == "update_hlr_sms_status")
+async def update_status(callback: CallbackQuery, state: FSMContext):
     set_info = await state.get_data()
-    phone = set_info['phone'][-10:]
-    sms_id = set_info['sms_id']
+    phone = set_info["phone"][-10:]
+    sms_id = set_info["sms_id"]
     loop = asyncio.get_event_loop()
     info = await loop.run_in_executor(None, smsc.update_status, sms_id, phone)
     print(info)
     await callback.message.answer(
         f"{info[14]}-запрос к номеру: <b>{info[12]}</b> \nСтоимость {info[13]} руб\nСтатус: {info[15]}\nБаланс: <b>{smsc.get_balance()} руб</b>\nДля обновления статуса нажмите кнопку 'Обновить'",
         reply_markup=kb.update_hlr_status(),
-        parse_mode='HTML'
+        parse_mode="HTML",
     )
 
 
@@ -251,10 +250,29 @@ async def  update_status(callback: CallbackQuery, state: FSMContext):
 #     )
 
 
+# Блок работы с IMEI
 
 
+@dp.message(F.text.regexp(r"\b\d{14}\b"))
+async def check_imei(message: Message, state: FSMContext):
+    """Взаимодействие с IMEI-номером"""
+    imei = message.text[:14]
+    full_imei = alg_luhn.luhn(imei)
+    loop = asyncio.get_event_loop()
+    imei_device = await loop.run_in_executor(None, db.check_imei, imei)
+    if imei_device == None:
+        result = "Отсутствует в базе 🔴"
+    else:
+        result = imei_device
+    print(imei, "imei", result, "result")
+    await message.answer(
+        f"IMEI-номер: `{full_imei}`\nМодель: `{result}`",
+        reply_markup=kb.imei_keyboard(imei=full_imei, imei_device=imei_device),
+        parse_mode="Markdown",
+    )
 
 
+# Блок необязательной логики
 
 
 @dp.message(Command("help"))
@@ -270,10 +288,14 @@ async def cmd_help(message: Message):
         + "├ 💌 HLR - отправка HLR-запроса\n"
         + "├ 🟢 WhatsApp - переход в WhatsApp\n"
         + "└ 🔵 Telegram - переход в Telegram\n\n"
+        + "🆔 Поиск по IMEI\n"
+        + "├ ℹ️ Узнать модель устройства\n"
+        + "├ 🟣 Посмотреть IMEI на imei.info\n"
+        + "└ 🔴 Посмотреть фото в Яндексе\n"
         + "📡 <b>Поиск по базовой станции</b>\n"
         + "├ 📝 <b>MNC LAC CID</b> - ПРИМЕР\n"
         + "├ ℹ️ Возможность работы со <b>списками БС</b>\n"
-        "├ ℹ️ MNC - 1, 2, 25, 99\n"
+        + "├ ℹ️ MNC - 1, 2, 25, 99\n"
         + "├ ℹ️ LAC - До 8 цифр\n"
         + "├ ℹ️ CID - Неограниченное количество цифр\n"
         + "└ 🗺️ Отображение координат <b>Базовых Станций</b>",

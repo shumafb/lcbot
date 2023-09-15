@@ -49,3 +49,13 @@ def update_hlr_status():
     ]
     keyboard = InlineKeyboardMarkup(inline_keyboard=update_button)
     return keyboard
+
+def imei_keyboard(imei_device, imei):
+    imei_kb = [
+        [
+            InlineKeyboardButton(text='🟣 IMEI.info', url=f"https://www.imei.info/?imei={imei}"),
+            InlineKeyboardButton(text='🔴 Фото в Яндексе', url=f"https://ya.ru/search/?text={imei_device}"),
+        ]
+    ]
+    keyboard = InlineKeyboardMarkup(inline_keyboard=imei_kb)
+    return keyboard

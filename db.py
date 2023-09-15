@@ -1,25 +1,26 @@
-import sqlalchemy as db
-import bot
+from sqlalchemy import create_engine
+from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy import String, Integer, Column
+from sqlalchemy.orm import Session
 
-engine = db.create_engine('sqlite:///db///db.sqlite')
-
-conn = engine.connect()
-
-metadata = db.MetaData()
-
-users = db.Table('users', metadata,
-                 db.Column('user_id', db.Integer, primary_key=True),
-                 db.Column('pass_check', db.Boolean, default=False)
-)
+engine = create_engine("sqlite:///db///db.sqlite", echo=True)
 
 
-# def add_user(user_id, pass_check):
-#     add_query = users.insert().values({'user_id': user_id, 'pass_check': pass_check})
-#     conn.execute(add_query)
+class Base(DeclarativeBase):
+    pass
 
 
-select_all = db.select([users])
+class Imei(Base):
+    __tablename__ = "imei"
 
-select_all_results = conn.execute(select_all)
+    imei_tac = Column(Integer, primary_key=True)
+    device = Column(String)
 
-print(select_all_results.fetchall())
+
+def check_imei(imei):
+    with Session(autoflush=False, bind=engine) as db:
+        imei_list = db.query(Imei).all()
+        for imei in imei_list:
+            if imei == imei.imei_tac:
+                return imei.device
+
