@@ -54,7 +54,7 @@ def imei_keyboard(imei_device, imei):
     imei_kb = [
         [
             InlineKeyboardButton(text='🟣 IMEI.info', url=f"https://www.imei.info/?imei={imei}"),
-            InlineKeyboardButton(text='🔴 Фото в Яндексе', url=f"https://ya.ru/search/?text={imei_device}"),
+            InlineKeyboardButton(text='🔴 Яндекс', url=f"https://ya.ru/search/?text={imei_device}"),
         ]
     ]
     keyboard = InlineKeyboardMarkup(inline_keyboard=imei_kb)

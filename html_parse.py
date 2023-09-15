@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 
 
 
-def constructor(bslist):
+def constructor(bslist, lclist):
     """Функция принимает список словарей с характеристиками базовых станций,
     возвращает тело html-страницы"""
     operators = {1: "red", 2: "green", 25: "black", 99: "yellow"}
@@ -36,7 +36,8 @@ def constructor(bslist):
     count = 0
     for bs in bslist:
         markers.append(
-            f"    L.marker(coords{count}).bindPopup(coords{count}[0] + ', ' + coords{count}[1]).addTo(map);"
+            # f"    L.marker(coords{count}).bindPopup(coords{count}[0] + ', ' + coords{count}[1]).addTo(map);"
+            f"    L.marker(coords{count}).bindPopup('{lclist[count]}').addTo(map);"
         )
         count += 1
 

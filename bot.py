@@ -95,6 +95,7 @@ async def api_locator(message: Message):
     bs_list = []
     yapi_info = []
     pretty_bs_list = []
+    lc_list = []
     count = 0
     for bs in bs_info:
         bs_list.append(bs.split(" "))
@@ -102,13 +103,14 @@ async def api_locator(message: Message):
         mnc = bs[0]
         lac = bs[1]
         cid = bs[2]
+        lc_list.append(f"{lac}-{cid}")
         yapi_info.append(yapi.push_api(lac=lac, cid=cid, mnc=mnc))
     for bs in yapi_info:
         pretty_bs_list.append(
             f"Координаты:\n{count+1}. {lac}-{cid}   |   `{bs['coord'].split('-')[0]} {bs['coord'].split('-')[1]}`"
         )
         count += 1
-    html_parse.constructor(bslist=yapi_info)
+    html_parse.constructor(bslist=yapi_info, lclist=lc_list)
     document = FSInputFile("test2.html", filename="map.html")
     await message.answer("\n".join(pretty_bs_list), parse_mode="Markdown")
     await bot.send_document(chat_id=message.chat.id, document=document)
@@ -291,7 +293,7 @@ async def cmd_help(message: Message):
         + "🆔 Поиск по IMEI\n"
         + "├ ℹ️ Узнать модель устройства\n"
         + "├ 🟣 Посмотреть IMEI на imei.info\n"
-        + "└ 🔴 Посмотреть фото в Яндексе\n"
+        + "└ 🔴 Посмотреть фото в Яндексе\n\n"
         + "📡 <b>Поиск по базовой станции</b>\n"
         + "├ 📝 <b>MNC LAC CID</b> - ПРИМЕР\n"
         + "├ ℹ️ Возможность работы со <b>списками БС</b>\n"
