@@ -126,7 +126,35 @@ async def api_locator(message: Message):
 #     await state.set_state(SetData.ph_get)
 
 
-@dp.message(F.text.regexp(r"^(\+7|7|8|)?\d{10}^"))
+# Блок работы с IMEI
+
+
+@dp.message(F.text.regexp(r"\b\d{14}\b"))
+async def check_imei(message: Message, state: FSMContext):
+    """Взаимодействие с IMEI-номером"""
+    imei = message.text[:14]
+    full_imei = alg_luhn.luhn(imei)
+    loop = asyncio.get_event_loop()
+    imei_device = await loop.run_in_executor(None, db.check_imei, imei)
+    if imei_device == None:
+        result = "Отсутствует в базе 🔴"
+    else:
+        result = imei_device
+    print(imei, "imei", result, "result")
+    await message.answer(
+        f"IMEI-номер: `{full_imei}`\nМодель: `{result}`",
+        reply_markup=kb.imei_keyboard(imei=full_imei, imei_device=imei_device),
+        parse_mode="Markdown",
+    )
+
+@dp.message(F.text.regexp(r"\b\d{15}\b"))
+async def no_imei(message: Message):
+    await message.answer(
+        "Если вы хотели ввести IMEI-номер, введите 14 цифр"
+    )
+
+
+@dp.message(F.text.regexp(r"^(\+7|7|8|)?\d{10}"))
 async def menu_phone(message: Message, state: FSMContext):
     """Меню взаимодействия с аб.номером"""
     if message.from_user.id not in idlist:
@@ -251,27 +279,6 @@ async def update_status(callback: CallbackQuery, state: FSMContext):
 #         parse_mode="HTML"
 #     )
 
-
-# Блок работы с IMEI
-
-
-@dp.message(F.text.regexp(r"\b\d{14}\b"))
-async def check_imei(message: Message, state: FSMContext):
-    """Взаимодействие с IMEI-номером"""
-    imei = message.text[:14]
-    full_imei = alg_luhn.luhn(imei)
-    loop = asyncio.get_event_loop()
-    imei_device = await loop.run_in_executor(None, db.check_imei, imei)
-    if imei_device == None:
-        result = "Отсутствует в базе 🔴"
-    else:
-        result = imei_device
-    print(imei, "imei", result, "result")
-    await message.answer(
-        f"IMEI-номер: `{full_imei}`\nМодель: `{result}`",
-        reply_markup=kb.imei_keyboard(imei=full_imei, imei_device=imei_device),
-        parse_mode="Markdown",
-    )
 
 
 # Блок необязательной логики
