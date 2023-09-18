@@ -18,11 +18,8 @@ def check_phone(phone):
     df = pd.read_csv(file, header=0).replace(np.nan, None)
     for row in df.iterrows():
         card = row[1].to_dict()
-        list1 = []
         if phone == card['phone_number']:
-            list1.append(phone)
-        zipper = zip(list1[0], list1[1])
-
+            print(card)
 
 
 
