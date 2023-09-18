@@ -261,15 +261,18 @@ async def check_imei(message: Message, state: FSMContext):
     imei = message.text[:14]
     full_imei = alg_luhn.luhn(imei)
     loop = asyncio.get_event_loop()
-    imei_device = await loop.run_in_executor(None, db.check_imei, imei)
+    # imei_device = await loop.run_in_executor(None, db.check_imei, imei)
+    imei_device = await loop.run_in_executor(None, yapi.check_imei, full_imei)
     if imei_device == None:
         result = "Отсутствует в базе 🔴"
     else:
-        result = imei_device
+        result = "\n".join(imei_device)
+        device = imei_device[1].split(': ')[1]+" "+imei_device[3].split(": ")[1]
+        print(device)
     print(imei, "imei", result, "result")
     await message.answer(
-        f"IMEI-номер: `{full_imei}`\nМодель: `{result}`",
-        reply_markup=kb.imei_keyboard(imei=full_imei, imei_device=imei_device),
+        result,
+        reply_markup=kb.imei_keyboard(imei=full_imei, imei_device=device),
         parse_mode="Markdown",
     )
 
