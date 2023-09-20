@@ -86,7 +86,7 @@ async def cmd_start(message: Message):
 #     await state.set_state(SetData.ch_laccid)
 
 
-@dp.message(F.text.regexp(r"^(1|2|25|99) (\d{1,8}) (\d+)"))
+@dp.message(F.text.regexp(r"^(1|2|20|99) (\d{1,8}) (\d+)"))
 async def api_locator(message: Message):
     """Принимает mnc lac cid от пользователя и направляет аргументы в Яндекс.Локатор"""
     if message.from_user.id not in idlist:
