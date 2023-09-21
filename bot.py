@@ -16,6 +16,7 @@ import smsc_api
 import yapi
 import db
 import alg_luhn
+import saveru
 
 # logging.basicConfig(level=logging.INFO, filename="log/py_bot.log", filemode='w', format="%(asctime)s %(levelname)s %(message)s")
 logging.basicConfig(level=logging.INFO)
@@ -140,7 +141,7 @@ async def check_imei(message: Message, state: FSMContext):
         result = "Отсутствует в базе 🔴"
     else:
         result = "\n".join(imei_device)
-        device = imei_device[1].split(': ')[1]+" "+imei_device[3].split(": ")[1]
+        device = imei_device[1].split(": ")[1] + " " + imei_device[3].split(": ")[1]
         print(device)
     print(imei, "imei", result, "result")
     await message.answer(
@@ -152,9 +153,7 @@ async def check_imei(message: Message, state: FSMContext):
 
 @dp.message(F.text.regexp(r"\b\d{15}\b"))
 async def no_imei(message: Message):
-    await message.answer(
-        "Если вы хотели ввести IMEI-номер, введите 14 цифр"
-    )
+    await message.answer("Если вы хотели ввести IMEI-номер, введите 14 цифр")
 
 
 @dp.message(F.text.regexp(r"^(\+7|7|8|)?\d{10}"))
@@ -162,13 +161,19 @@ async def menu_phone(message: Message, state: FSMContext):
     """Меню взаимодействия с аб.номером"""
     if message.from_user.id not in idlist:
         return message.answer("Нет доступа")
+    loop = asyncio.get_event_loop()
     await state.update_data(phone=message.text)
     phone = message.text[-10:]
     info = num.check_phone(phone)
-
+    info_saveru = await loop.run_in_executor(None, saveru.check_phone, int(f"7{phone}"))
+    maybe_address = '\n'.join(info_saveru['ya_deli_bee_address'])
     await message.answer(
         f"Номер: <b>{phone}</b> \nОператор: {info['operator']}\nРегион: {info['region']}\n"
-        + f"\nБаланс SMSC: <b>{smsc.get_balance()} руб</b>\nВозможность HLR-запроса: {'🔴' if info['operator'].lower() in 'мегафон' else '🟢'}\n\nВыберите взаимодействие с одним из сервисов:  ",
+        + f"\nБаланс SMSC: <b>{smsc.get_balance()} руб</b>\nВозможность HLR-запроса:"
+        + f"{'🔴' if info['operator'].lower() in 'мегафон' else '🟢'} \n\n"
+        + f"📕<b>Возможные имена:</b>\n {', '.join(info_saveru['name'])}\n\n"
+        + f"🏚️<b>Возможные адреса:</b>\n {maybe_address}\n\n"
+        + f"Выберите взаимодействие с одним из сервисов:",
         reply_markup=kb.ph_menu(phone=phone),
         parse_mode="HTML",
     )
@@ -283,7 +288,6 @@ async def update_status(callback: CallbackQuery, state: FSMContext):
 #     )
 
 
-
 # Блок необязательной логики
 
 
@@ -307,7 +311,7 @@ async def cmd_help(message: Message):
         + "📡 <b>Поиск по базовой станции</b>\n"
         + "├ 📝 <b>MNC LAC CID</b> - ПРИМЕР\n"
         + "├ ℹ️ Возможность работы со <b>списками БС</b>\n"
-        + "├ ℹ️ MNC - 1, 2, 25, 99\n"
+        + "├ ℹ️ MNC - 1, 2, 20, 99\n"
         + "├ ℹ️ LAC - До 8 цифр\n"
         + "├ ℹ️ CID - Неограниченное количество цифр\n"
         + "└ 🗺️ Отображение координат <b>Базовых Станций</b>",
