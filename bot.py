@@ -14,7 +14,6 @@ import num
 import smsc
 import smsc_api
 import yapi
-import db
 import alg_luhn
 import saveru
 
@@ -39,7 +38,7 @@ bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
 
-mnc_operator = {"mts": "1", "megafon": "2", "t2": "25", "beeline": "99"}
+mnc_operator = {"mts": "1", "megafon": "2", "t2": "20", "beeline": "99"}
 
 
 class SetData(StatesGroup):
@@ -142,8 +141,6 @@ async def check_imei(message: Message, state: FSMContext):
     else:
         result = "\n".join(imei_device)
         device = imei_device[1].split(": ")[1] + " " + imei_device[3].split(": ")[1]
-        print(device)
-    print(imei, "imei", result, "result")
     await message.answer(
         result,
         reply_markup=kb.imei_keyboard(imei=full_imei, imei_device=device),
@@ -166,7 +163,7 @@ async def menu_phone(message: Message, state: FSMContext):
     phone = message.text[-10:]
     info = num.check_phone(phone)
     info_saveru = await loop.run_in_executor(None, saveru.check_phone, int(f"7{phone}"))
-    maybe_address = '\n'.join(info_saveru['ya_deli_bee_address'])
+    maybe_address = "\n".join(info_saveru["ya_deli_bee_address"]).replace("None", "")
     await message.answer(
         f"Номер: <b>{phone}</b> \nОператор: {info['operator']}\nРегион: {info['region']}\n"
         + f"\nБаланс SMSC: <b>{smsc.get_balance()} руб</b>\nВозможность HLR-запроса:"
@@ -286,6 +283,36 @@ async def update_status(callback: CallbackQuery, state: FSMContext):
 #         reply_markup=kb.update_status,
 #         parse_mode="HTML"
 #     )
+
+
+@dp.message(F.text.regexp(r"^([А-Я]|[а-я]){3}"))
+async def search_fio(message: Message):
+    """Принимает фамилию (имя, отчество опционально), выгражает информацию из баз данных"""
+    if message.from_user.id not in idlist:
+        return message.answer("Нет доступа")
+    loop = asyncio.get_event_loop()
+    fio = message.text
+    info_saveru_fio = await loop.run_in_executor(None, saveru.check_fio, fio)
+    status = info_saveru_fio["status"]
+
+    if status == 0:
+        await message.answer(
+            "<b>Запрос</b>: {fio}\n\n <b>Результаты запроса:</b>\n\n Нет данных"
+        )
+    elif status == 1:
+        await message.answer(
+            f"*Запрос*: {fio}\n\n*Результаты запроса:*\n\n *Возможные имена:*\n{info_saveru_fio['result']['name'][0]}\n*Возможные дни рождения:*\n`{info_saveru_fio['result']['birthday_list'][0]}`\nВозможные адреса: {info_saveru_fio['result']['address_list'][0]} *Возможные email-адреса:*\n{info_saveru_fio['result']['email_list'][0]}\n*Возможные автомобили:*\n{info_saveru_fio['result']['car_list'][0]}\n*Возможные госномера авто*\n{info_saveru_fio['result']['car_plate_list'][0]}"
+        )
+    elif status == 2:
+        await message.answer(
+            f"*Запрос*: {fio}\n\n*Результаты запроса:*\n\n *Возможные имена:*\n{info_saveru_fio['result']['name'][0]}\n*Возможные дни рождения:*\n`{info_saveru_fio['result']['birthday_list'][0]}`\nВозможные адреса: {info_saveru_fio['result']['address_list'][0]} *Возможные email-адреса:*\n{info_saveru_fio['result']['email_list'][0]}\n*Возможные автомобили:*\n{info_saveru_fio['result']['car_list'][0]}\n*Возможные госномера авто*\n{info_saveru_fio['result']['car_plate_list'][0]}"
+        )
+    elif status == 3:
+        print(info_saveru_fio["result"])
+        # document = FSInputFile('result.csv', filename='Результат')
+        # await message.answer(f"<b>Запрос</b>: {fio}\n\n <b>Выявлено большое количество ответов</b>\n\n")
+        # await bot.send_document(chat_id=message.chat.id, document=document)
+        pass
 
 
 # Блок необязательной логики

@@ -1,5 +1,5 @@
 import hashlib
-import time
+import re
 from itertools import chain
 
 import numpy as np
@@ -9,20 +9,136 @@ pd.options.mode.chained_assignment = None
 
 
 def check_fio(fio):
+    filter = None
+    fio_list = fio.split()
+    fio = fio_list[0].lower()
     fio_hash = hashlib.md5(fio.lower().encode()).hexdigest()
+    if len(fio_list) > 1:
+        filter = fio_list[1].lower()
     file = f"db/dbln/{fio_hash[0:1]}/{fio_hash[1:2]}/{fio_hash[0:4]}.csv"
-    print(file)
-    df = pd.read_csv(file, header=0).replace(np.nan, None)
-    df_fil = df.loc[df['lnmatch_last_name'] == fio.lower()]
+    df = pd.read_csv(file, header=0).replace(np.nan, "")
+    df = df.loc[df["lnmatch_last_name"] == fio.lower()]
+    if filter is not None:
+        df = df.loc[
+            (df["wildberries_name"].apply(str.lower).str.contains(filter))
+            | (df["rfcont_name"].apply(str.lower).str.contains(filter))
+            | (df["vk_first_name"].apply(str.lower).str.contains(filter))
+            | (df["gibdd2_base_name"].apply(str.lower).str.contains(filter))
+            | (df["gibdd2_name"].apply(str.lower).str.contains(filter))
+            | (df["cdek_full_name"].apply(str.lower).str.contains(filter))
+            | (df["beeline_full_name"].apply(str.lower).str.contains(filter))
+            | (df["fb_full_name"].apply(str.lower).str.contains(filter))
+            | (df["avito_user_name"].apply(str.lower).str.contains(filter))
+            | (df["yandex_name"].apply(str.lower).str.contains(filter))
+            | (df["mailru_full_name"].apply(str.lower).str.contains(filter))
+            | (df["delivery2_name"].apply(str.lower).str.contains(filter))
+            | (df["gibdd_name"].apply(str.lower).str.contains(filter))
+        ]
+    # Работа со столбцом адрес яндекс
+    df['yandex_address_full'] = (
+        df["yandex_address_city"].astype(str)
+        + ", "
+        + df["yandex_address_street"].astype(str)
+        + ", "
+        + df["yandex_address_house"].astype(str)
+    )
+    df.drop(columns=['yandex_address_city', 'yandex_address_street', 'yandex_address_house'])
+    # Работа со столбцом адрес суши
+    df['sushi_address_full'] = (
+        df["sushi_address_city"].astype(str)
+        + ", "
+        + df["sushi_address_street"].astype(str)
+        + ", "
+        + df["sushi_address_home"].astype(str)
+    )
+    df.drop(columns=['sushi_address_city', 'sushi_address_street', 'sushi_address_home'])
+#   Работа со столбцом адрес билайн
+    df['beeline_address_full'] = (
+        df["beeline_address_city"].astype(str)
+        + ", "
+        + df["beeline_address_street"].astype(str)
+        + ", "
+        + df["beeline_address_house"].astype(str)
+    )
+    df.drop(columns=['beeline_address_city', 'beeline_address_street', 'beeline_address_house'])
 
-    return df_fil
+# Работа с авто гибдд
+    df['gibdd2_car_full'] = (
+        df["gibdd2_car_model"].astype(str)
+        + ", "
+        + df["gibdd2_car_year"].astype(str)
+        + ", "
+        + df["gibdd2_car_vin"].astype(str)
+        + ", "
+        + df["gibdd2_car_color"].astype(str)
+    )
+    df.drop(columns=['gibdd2_car_model', 'gibdd2_car_year', 'gibdd2_car_vin', 'gibdd2_car_color'])
+
+    if df.shape[0] > 10:
+        result = df.reset_index(drop=True)
+        result = result_fio(result).to_csv('result.csv', index=False)
+        return {'status': 3, 'result': result}
+    elif df.shape[0] == 1:
+        result = df.reset_index(drop=True)
+        print(result)
+        return {'status': 1, 'result': result_fio(result).to_dict()}
+    elif df.shape[0] <= 10:
+        result = df.reset_index(drop=True)
+        return {'status': 2, 'result': result_fio(result).to_dict()}
+    else:
+        return {'status': 0, 'result': 'Нет данных'}
+
+def result_fio(result):
+    # name = [] # Имена
+    # birthday_list = [] # Дата рождения
+    # address_list = [] # Адреса
+    # email_list= [] # Email
+    # car_list = [] # Авто
+    # car_plate_list = [] # Госномера
+    result_list = []
+    result = result.to_dict()
+    for i in range(len(result['lnmatch_last_name'])):
+        name = [] # Имена
+        birthday_list = [] # Дата рождения
+        address_list = [] # Адреса
+        email_list= [] # Email
+        car_list = [] # Авто
+        car_plate_list = [] # Госномера
+        for key, value in result.items():
+
+            if key.endswith('name'):
+                if key.startswith('okrug_nameokrug') or key.startswith('yandex_place_name') or key.endswith('vendor_name') or key.startswith('delivery_name') or key.startswith('miltor_name') or key.startswith('pikabu_username'):
+                    continue
+                elif key.startswith('lnmatch_last_name'):
+                    name.append([value[i]])
+                else:
+                    name.append([value[i]])
+            if key.endswith('address_full') or key.startswith('wildberries_address') or key.startswith('gibdd2_passport_address') or key.startswith('gibdd2_address'):
+                address_list.append([value[i]])
+            if key.endswith('email'):
+                email_list.append([value[i]])
+            if key.endswith('plate_number'):
+                car_plate_list.append([value[i]])
+            if key.startswith('gibdd2_car_full'):
+                car_list.append([value[i]])
+            if key.endswith('birth'):
+                birthday_list.append([value[i]])
+        result_format = {
+            'name': ', '.join(list(filter(lambda item: item is not None, list(set(list(chain(*name))))))),
+            "birthday_list": ', '.join(list(filter(lambda item: item is not None, list(set(list(chain(*birthday_list))))))),
+            'address_list': ', '.join(list(filter(lambda item: item is not None, list(set(list(chain(*address_list))))))),
+            'email_list': ', '.join(list(filter(lambda item: item is not None, list(set(list(chain(*email_list))))))),
+            'car_list': ', '.join(list(filter(lambda item: item is not None, list(set(list(chain(*car_list))))))),
+            'car_plate_list': ', '.join(list(filter(lambda item: item is not None, list(set(list(chain(*car_plate_list))))))),
+        }
+        for key, value in result_format.items():
+            result_format[key] = value.replace(', ,', '').replace(' , ', '').replace(' ,', '').replace('  ', '')
+        result_list.append(result_format)
+
+    return pd.DataFrame(result_list)
+
 
 def check_phone(phone):
-    name = []  # Возможные имена
-    yandex_address = []  # Адрес по яндекс еде по ячейкам
-    doorcode = []  # код домофона
-    delivery_address = []  # адрес по деливер
-    beeline_address = []  # адрес по билайну
     sphone = str(phone)
     file = f"db/dbpn/{sphone[0:2]}/{sphone[2:4]}/{sphone[4:6]}/{sphone[6:8]}.csv"
     df = pd.read_csv(file, header=0).replace(np.nan, None)
@@ -46,6 +162,11 @@ def check_phone(phone):
 
 
 def result_phone(result):
+    name = []  # Возможные имена
+    yandex_address = []  # Адрес по яндекс еде по ячейкам
+    doorcode = []  # код домофона
+    delivery_address = []  # адрес по деливер
+    beeline_address = []  # адрес по билайну
     for key, value in result.items():
         if key.endswith("name"):
             if key.endswith("vendor_name"):
@@ -73,21 +194,16 @@ def result_phone(result):
             ):
                 doorcode.append(value[0])
         if key.startswith("beeline_address_"):
-            if key.startswith("beeline_address_entrance_count") or key.startswith("beeline_address_floors_count"):
+            if key.startswith("beeline_address_entrance_count") or key.startswith(
+                "beeline_address_floors_count"
+            ):
                 continue
             elif value[0] not in beeline_address:
                 beeline_address.append(value[0])
 
-
     result_format = {
         "name": list(filter(lambda item: item is not None, list(set(list(chain(*name)))))),
         "doorcode": list(filter(lambda item: item is not None, list(set(list(chain(*doorcode)))))),
-        "ya_deli_bee_address": list(filter(lambda item: item is not None, list(set(list(chain(*yandex_address, *delivery_address, *beeline_address)))))),
-    }
-
-
+        "ya_deli_bee_address": list(filter(lambda item: item is not None,list(set(list(chain(*yandex_address, *delivery_address, *beeline_address)))),)),
+        }
     return result_format
-
-
-x = 'байбеков'
-print(check_fio(x))
