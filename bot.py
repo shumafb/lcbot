@@ -285,7 +285,7 @@ async def update_status(callback: CallbackQuery, state: FSMContext):
 #     )
 
 
-@dp.message(F.text.regexp(r"^([А-Я]|[а-я]){3}"))
+@dp.message(F.text.regexp(r"^([А-Я]|[а-я]){3,}"))
 async def search_fio(message: Message):
     """Принимает фамилию (имя, отчество опционально), выгражает информацию из баз данных"""
     if message.from_user.id not in idlist:
@@ -297,22 +297,24 @@ async def search_fio(message: Message):
 
     if status == 0:
         await message.answer(
-            "<b>Запрос</b>: {fio}\n\n <b>Результаты запроса:</b>\n\n Нет данных"
+            "<b>Запрос</b>: {fio}\n\n <b>Результаты запроса:</b>\n\n Нет данных",
+            parse_mode='HTML'
         )
     elif status == 1:
         await message.answer(
-            f"*Запрос*: {fio}\n\n*Результаты запроса:*\n\n *Возможные имена:*\n{info_saveru_fio['result']['name'][0]}\n*Возможные дни рождения:*\n`{info_saveru_fio['result']['birthday_list'][0]}`\nВозможные адреса: {info_saveru_fio['result']['address_list'][0]} *Возможные email-адреса:*\n{info_saveru_fio['result']['email_list'][0]}\n*Возможные автомобили:*\n{info_saveru_fio['result']['car_list'][0]}\n*Возможные госномера авто*\n{info_saveru_fio['result']['car_plate_list'][0]}"
+            f"Запрос: *{fio}*\n\n*Результаты запроса:*\n\n *Возможные имена:*\n{info_saveru_fio['result']['name'][0]}\n\n*Возможные дни рождения:*\n`{info_saveru_fio['result']['birthday_list'][0]}`\n*Возможные адреса:* {info_saveru_fio['result']['address_list'][0]}\n\n*Возможные email-адреса:*\n{info_saveru_fio['result']['email_list'][0]}\n*Возможные автомобили:*\n{info_saveru_fio['result']['car_list'][0]}\n*Возможные госномера авто:*\n{info_saveru_fio['result']['car_plate_list'][0]}",
+            parse_mode='Markdown'
         )
     elif status == 2:
         await message.answer(
-            f"*Запрос*: {fio}\n\n*Результаты запроса:*\n\n *Возможные имена:*\n{info_saveru_fio['result']['name'][0]}\n*Возможные дни рождения:*\n`{info_saveru_fio['result']['birthday_list'][0]}`\nВозможные адреса: {info_saveru_fio['result']['address_list'][0]} *Возможные email-адреса:*\n{info_saveru_fio['result']['email_list'][0]}\n*Возможные автомобили:*\n{info_saveru_fio['result']['car_list'][0]}\n*Возможные госномера авто*\n{info_saveru_fio['result']['car_plate_list'][0]}"
+            f"*Запрос*: {fio}\n\n*Результаты запроса:*\n\n *Возможные имена:*\n{info_saveru_fio['result']['name'][0]}\n\n*Возможные дни рождения:*\n`{info_saveru_fio['result']['birthday_list'][0]}`\n*Возможные адреса:* {info_saveru_fio['result']['address_list'][0]}\n\n*Возможные email-адреса:*\n{info_saveru_fio['result']['email_list'][0]}\n*Возможные автомобили:*\n{info_saveru_fio['result']['car_list'][0]}\n*Возможные госномера авто:*\n{info_saveru_fio['result']['car_plate_list'][0]}",
+            parse_mode="Markdown"
         )
     elif status == 3:
         print(info_saveru_fio["result"])
-        # document = FSInputFile('result.csv', filename='Результат')
-        # await message.answer(f"<b>Запрос</b>: {fio}\n\n <b>Выявлено большое количество ответов</b>\n\n")
-        # await bot.send_document(chat_id=message.chat.id, document=document)
-        pass
+        document = FSInputFile('result.csv', filename='Результат')
+        await message.answer(f"<b>Запрос</b>: {fio}\n\n <b>Выявлено большое количество ответов\nОтвет по запросу реализован в виде файла:</b>")
+        await bot.send_document(chat_id=message.chat.id, document=document)
 
 
 # Блок необязательной логики
@@ -326,11 +328,15 @@ async def cmd_help(message: Message):
         "<b>Примеры команд для ввода:</b>\n\n"
         + "📱 <b>Поиск по номеру телефона</b>\n"
         + "├ 📝 <b>79994492792</b> - ПРИМЕР\n"
+        + "├  Автоматический поиск по базам данных (saverudata)\n"
         + "├ ℹ️ Любой формат (+7..., 8..., 9...)\n"
         + "├ 📧 Ping SMS - отправка Ping SMS\n"
         + "├ 💌 HLR - отправка HLR-запроса\n"
         + "├ 🟢 WhatsApp - переход в WhatsApp\n"
         + "└ 🔵 Telegram - переход в Telegram\n\n"
+        + " <b>Поиск по ФИО</b>\n"
+        + "├ 📝 [ФАМИЛИЯ (обязательно)] [ИМЯ (необязательно)] - ПРИМЕР ЗАПРОСА\n"
+        + "└ ℹ️ Поиск по базам данных (saverudata)\n\n"
         + "🆔 Поиск по IMEI\n"
         + "├ ℹ️ Узнать модель устройства\n"
         + "├ 🟣 Посмотреть IMEI на imei.info\n"

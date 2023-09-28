@@ -76,6 +76,7 @@ def check_fio(fio):
 
     if df.shape[0] > 10:
         result = df.reset_index(drop=True)
+        print(result)
         result = result_fio(result).to_csv('result.csv', index=False)
         return {'status': 3, 'result': result}
     elif df.shape[0] == 1:
