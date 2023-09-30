@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 def constructor(bslist, lclist):
     """Функция принимает список словарей с характеристиками базовых станций,
     возвращает тело html-страницы"""
-    operators = {1: "red", 2: "green", 25: "black", 99: "yellow"}
+    operators = {1: "red", 2: "green", 20: "black", 99: "yellow"}
     with open("main.html", "r", encoding="utf-8") as file:
         soup = BeautifulSoup(file, "html.parser")
 

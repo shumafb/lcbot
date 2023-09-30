@@ -13,14 +13,15 @@ url = "https://api.lbs.yandex.net/geolocation"
 
 
 def push_api(lac, cid, mnc):
+    print(lac, cid, mnc)
     """Принимает lac, cid, mnc базовой станции,
     отправляет запрос Яндекс.Локатору
     и возвращает ответ"""
     data = f'json={{"common": {{"version": "1.0", "api_key": "3335cce6-3e6b-443f-bfd9-ee6ed7689d62"}}, "gsm_cells": [ {{ "countrycode": 250, "operatorid": {mnc}, "cellid": {cid}, "lac": {lac}, "signal_strength": -80, "age": 1000}} ]}}'
 
     response = requests.post("http://api.lbs.yandex.net/geolocation", data=data)
-
     save_data = response.json()
+    print(save_data)
     latitude = save_data["position"]["latitude"]
     longitude = save_data["position"]["longitude"]
     coord = str(latitude)[:9] + "-" + str(longitude)[:9]

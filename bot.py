@@ -142,7 +142,6 @@ async def menu_phone(message: Message, state: FSMContext):
             text += f"🏚️<b>Возможные адреса:</b>\n {maybe_address}\n\n"
     text += "Выберите взаимодействие с одним из сервисов."
 
-    print(maybe_address)
     await message.answer(
         text,
         reply_markup=kb.ph_menu(phone=phone),
