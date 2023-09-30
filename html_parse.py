@@ -46,7 +46,7 @@ def constructor(bslist, lclist):
     for bs in bslist:
         operator_color = operators[int(bs['operator'])]
         circles.append(
-            f"    L.circle(coords{count}, {{color: '{operator_color}', fillcolor: '{operator_color}', fillOpacity: 0.5, radius: {bs['radius']}}}).addTo(map);"
+            f"    L.circle(coords{count}, {{color: '{operator_color}', fillcolor: '{operator_color}', fillOpacity: 0.5, radius: 600}}).addTo(map);"
         )
         count += 1
 
