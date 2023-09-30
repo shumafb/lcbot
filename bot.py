@@ -58,33 +58,6 @@ async def cmd_start(message: Message):
 
 
 # ВЗАИМОДЕЙСТВИЕ С БС
-# @dp.callback_query(F.data == "bs_info")
-# async def send_bs_info(callback: types.CallbackQuery, state: FSMContext):
-#     """Выбор оператора и кода mnc"""
-#     await callback.message.answer("Выбери оператора:", reply_markup=kb.get_keyboard())
-#     await state.set_state(SetData.ch_operator)
-
-
-# @dp.callback_query(F.data.startswith("operator_"))
-# async def set_mnc_operator(callback: types.CallbackQuery, state: FSMContext):
-#     """Сохраняет в памяти MNC оператора"""
-
-#     action = callback.data.split("_")[1]
-
-#     if action == "mts":
-#         await state.update_data(mnc=mnc_operator.get("mts"))
-#     elif action == "megafon":
-#         await state.update_data(mnc=mnc_operator.get("megafon"))
-#     elif action == "t2":
-#         await state.update_data(mnc=mnc_operator.get("t2"))
-#     elif action == "beeline":
-#         await state.update_data(mnc=mnc_operator.get("beeline"))
-#     await callback.message.answer(
-#         "Введите LAC CID базовой станции через пробел \nДля ввода списком, используйте новую строку для каждой БС"
-#     )
-
-#     await state.set_state(SetData.ch_laccid)
-
 
 @dp.message(F.text.regexp(r"^(1|2|20|99) (\d{1,8}) (\d+)"))
 async def api_locator(message: Message):
@@ -116,17 +89,7 @@ async def api_locator(message: Message):
     await bot.send_document(chat_id=message.chat.id, document=document)
 
 
-# Взаимодействие с номером телефона
-# @dp.callback_query(F.data == "phone_info")
-# async def get_phone(callback: types.CallbackQuery, state: FSMContext):
-#     """Ввод номера телефона для дальнейшего взаимодействия"""
-#     await callback.message.answer(
-#         "Введите номер (10 цифр) для дальнейшего взаимодействия:"
-#     )
-#     await state.set_state(SetData.ph_get)
-
-# Блок работы с IMEI
-
+# Взаимодействие с IMEI телефона
 
 @dp.message(F.text.regexp(r"\b\d{14}\b"))
 async def check_imei(message: Message, state: FSMContext):
@@ -152,6 +115,7 @@ async def check_imei(message: Message, state: FSMContext):
 async def no_imei(message: Message):
     await message.answer("Если вы хотели ввести IMEI-номер, введите 14 цифр")
 
+# Взаимодействие с номером телефона
 
 @dp.message(F.text.regexp(r"^(\+7|7|8|)?\d{10}"))
 async def menu_phone(message: Message, state: FSMContext):
@@ -162,30 +126,30 @@ async def menu_phone(message: Message, state: FSMContext):
     await state.update_data(phone=message.text)
     phone = message.text[-10:]
     info = num.check_phone(phone)
-    info_saveru = await loop.run_in_executor(None, saveru.check_phone, int(f"7{phone}"))
-    maybe_address = "\n".join(info_saveru["ya_deli_bee_address"]).replace("None", "")
+    try:
+        info_saveru = await loop.run_in_executor(None, saveru.check_phone, int(f"7{phone}"))
+        print(info_saveru['ya_deli_bee_address'])
+        maybe_address = "\n".join(info_saveru["ya_deli_bee_address"]).replace("None,", "").replace('None', '')
+    except FileNotFoundError:
+        info_saveru = None
+
+    text = f"Запрос: <b>{phone}</b> \nОператор: {info['operator']}\nРегион: {info['region']}\n"
+    text += f"\nБаланс SMSC: <b>{smsc.get_balance()} руб</b>\nВозможность HLR-запроса:"
+    text += f"{'🔴' if info['operator'].lower() in 'мегафон' else '🟢'} \n\n"
+    if info_saveru is not None:
+        text += f"📕<b>Возможные имена:</b>\n {', '.join(info_saveru['name'])}\n\n"
+        if maybe_address is True:
+            text += f"🏚️<b>Возможные адреса:</b>\n {maybe_address}\n\n"
+    text += "Выберите взаимодействие с одним из сервисов."
+
+    print(maybe_address)
     await message.answer(
-        f"Номер: <b>{phone}</b> \nОператор: {info['operator']}\nРегион: {info['region']}\n"
-        + f"\nБаланс SMSC: <b>{smsc.get_balance()} руб</b>\nВозможность HLR-запроса:"
-        + f"{'🔴' if info['operator'].lower() in 'мегафон' else '🟢'} \n\n"
-        + f"📕<b>Возможные имена:</b>\n {', '.join(info_saveru['name'])}\n\n"
-        + f"🏚️<b>Возможные адреса:</b>\n {maybe_address}\n\n"
-        + f"Выберите взаимодействие с одним из сервисов:",
+        text,
         reply_markup=kb.ph_menu(phone=phone),
         parse_mode="HTML",
     )
     await state.set_state(SetData.ph_menu)
 
-
-# @dp.callback_query(F.data == "phmenu_smsc")
-# async def smsc_phone(callback: types.CallbackQuery, state: FSMContext):
-#     ph = await state.get_data()
-#     phone = ph["phone"][-10:]
-#     await callback.message.answer(
-#         f"Номер: {phone} \n Баланс: {smsc.get_balance()} \n Выберите действие:",
-#         reply_markup=kb.smsc_menu(),
-#     )
-#     await state.set_state(SetData.ph_smsc)
 
 
 @dp.callback_query(F.data.startswith("smsc_"))
@@ -194,32 +158,11 @@ async def smsc_action(callback: CallbackQuery, state: FSMContext):
     phone = ph["phone"][-10:]
 
     action = callback.data.split("_")[1]
-    print(action, "action")
 
-    # if action == "ping":
-    #     sms_id = smsc_client.send_sms(f"7{phone}", "", format=6)
-    #     print(sms_id, 'ping_sms_info', type(sms_id))
-    #     await state.update_data(sms_id=sms_id)
-    #     await callback.message.answer(
-    #         f'Ping-запрос на номер <b>{phone}</b> отправлен\n Для обновления статуса нажмите кнопку "Обновить"',
-    #         reply_markup=kb.update_status,
-    #         parse_mode="HTML",
-    #     )
-    # elif action == "hlr":
-    #     # sms_id = smsc_client.send_sms(f"7{phone}", "", format=3)
-    #     sms_id = smsc.send_hlr(phone=phone)
-    #     print(sms_id, 'hlr_sms_info', type(sms_id))
-    #     await state.update_data(sms_id=sms_id)
-    #     await callback.message.answer(
-    #         f'HLR-запрос на номер <b>{phone}</b> отправлен\n Для обновления статуса нажмите кнопку "Обновить"',
-    #         reply_markup=kb.update_status,
-    #         parse_mode="HTML",
-    #     )
 
     if action == "ping":
         loop = asyncio.get_event_loop()
         result = await loop.run_in_executor(None, smsc.send_ping, phone)
-        print(result, "hlr_id", type(result))
         await state.update_data(sms_id=result)
         await callback.message.answer(
             f'Ping-запрос на номер <b>{phone}</b> отправлен\n Для обновления статуса нажмите кнопку "Обновить"',
@@ -239,12 +182,12 @@ async def smsc_action(callback: CallbackQuery, state: FSMContext):
 
 
 @dp.callback_query(F.data == "update_ping_sms_status")
-async def update_status(callback: CallbackQuery, state: FSMContext):
+async def update_ping_status(callback: CallbackQuery, state: FSMContext):
     set_info = await state.get_data()
     phone = set_info["phone"][-10:]
     sms_id = set_info["sms_id"]
     loop = asyncio.get_event_loop()
-    info = await loop.run_in_executor(None, smsc.update_status, sms_id, phone)
+    info = await loop.run_in_executor(None, smsc.update_ping_status, sms_id, phone)
     await callback.message.answer(
         f"Ping-запрос к номеру: <b>{info[4]}</b> \nСтоимость {info[5]} руб\nСтатус: {info[7]}\nБаланс: <b>{smsc.get_balance()} руб</b>\nДля обновления статуса нажмите кнопку 'Обновить'",
         reply_markup=kb.update_ping_status(),
@@ -253,36 +196,17 @@ async def update_status(callback: CallbackQuery, state: FSMContext):
 
 
 @dp.callback_query(F.data == "update_hlr_sms_status")
-async def update_status(callback: CallbackQuery, state: FSMContext):
+async def update_hlr_status(callback: CallbackQuery, state: FSMContext):
     set_info = await state.get_data()
     phone = set_info["phone"][-10:]
     sms_id = set_info["sms_id"]
     loop = asyncio.get_event_loop()
-    info = await loop.run_in_executor(None, smsc.update_status, sms_id, phone)
-    print(info)
+    info = await loop.run_in_executor(None, smsc.update_hlr_status, sms_id, phone)
     await callback.message.answer(
         f"{info[14]}-запрос к номеру: <b>{info[12]}</b> \nСтоимость {info[13]} руб\nСтатус: {info[15]}\nБаланс: <b>{smsc.get_balance()} руб</b>\nДля обновления статуса нажмите кнопку 'Обновить'",
         reply_markup=kb.update_hlr_status(),
         parse_mode="HTML",
     )
-
-
-# @dp.callback_query(F.data == "update_status")
-# async def update_status(callback: CallbackQuery, state: FSMContext):
-#     ph = await state.get_data()
-#     print(ph, "ph_info")
-#     phone = ph["phone"][-10:]
-#     print(phone, "phone")
-#     id = ph["sms_id"]
-#     info = smsc.update_status(id=id, phone=phone)
-
-
-#     # await Bot.edit_message_text(smsc.pretty_update_ping(update_ping(ping, phone)), callback.message.chat.id, callback.message.message_id)
-#     await callback.message.answer(
-#         f"Запрос к номеру: <b>{info[4]}</b> \nСтоимость {info[5]} руб\nСтатус: {info[7]}\nБаланс: <b>{smsc_api.SMSC.get_balance()} руб</b>\nДля обновления статуса нажмите кнопку 'Обновить'",
-#         reply_markup=kb.update_status,
-#         parse_mode="HTML"
-#     )
 
 
 @dp.message(F.text.regexp(r"^([А-Я]|[а-я]){3,}"))
@@ -294,26 +218,58 @@ async def search_fio(message: Message):
     fio = message.text
     info_saveru_fio = await loop.run_in_executor(None, saveru.check_fio, fio)
     status = info_saveru_fio["status"]
-
+    print(info_saveru_fio)
     if status == 0:
         await message.answer(
             "<b>Запрос</b>: {fio}\n\n <b>Результаты запроса:</b>\n\n Нет данных",
             parse_mode='HTML'
         )
     elif status == 1:
+        text = f"*Имена:*\n{info_saveru_fio['result']['name'][0].strip(', ')}\n\n"
+        if info_saveru_fio['result']['phone_number'][0] != '':
+            text += f"*Номер телефона:*\n{info_saveru_fio['result']['phone_number'][0]}\n\n"
+        if info_saveru_fio['result']['birthday_list'][0] != '':
+            text += f"*Дни рождения:*\n{info_saveru_fio['result']['birthday_list'][0].strip(', ')}\n\n"
+        if info_saveru_fio['result']['address_list'][0] != '':
+            text += f"*Адреса:*\n`{info_saveru_fio['result']['address_list'][0].strip(', ')}`\n\n"
+        if info_saveru_fio['result']['email_list'][0] != '':
+            text += f"*Email-адреса:*\n{info_saveru_fio['result']['email_list'][0].strip(', ')}\n\n"
+        if info_saveru_fio['result']['car_list'][0] != '':
+           text += f"*Автомобили:*\n{info_saveru_fio['result']['car_list'][0].strip(', ')}\n\n"
+        if info_saveru_fio['result']['car_plate_list'][0] != '':
+            text += f"*Госномера авто:*\n{info_saveru_fio['result']['car_plate_list'][0].strip(', ')}"
+
         await message.answer(
-            f"Запрос: *{fio}*\n\n*Результаты запроса:*\n\n *Возможные имена:*\n{info_saveru_fio['result']['name'][0]}\n\n*Возможные дни рождения:*\n`{info_saveru_fio['result']['birthday_list'][0]}`\n*Возможные адреса:* {info_saveru_fio['result']['address_list'][0]}\n\n*Возможные email-адреса:*\n{info_saveru_fio['result']['email_list'][0]}\n*Возможные автомобили:*\n{info_saveru_fio['result']['car_list'][0]}\n*Возможные госномера авто:*\n{info_saveru_fio['result']['car_plate_list'][0]}",
+            text,
             parse_mode='Markdown'
         )
     elif status == 2:
-        await message.answer(
-            f"*Запрос*: {fio}\n\n*Результаты запроса:*\n\n *Возможные имена:*\n{info_saveru_fio['result']['name'][0]}\n\n*Возможные дни рождения:*\n`{info_saveru_fio['result']['birthday_list'][0]}`\n*Возможные адреса:* {info_saveru_fio['result']['address_list'][0]}\n\n*Возможные email-адреса:*\n{info_saveru_fio['result']['email_list'][0]}\n*Возможные автомобили:*\n{info_saveru_fio['result']['car_list'][0]}\n*Возможные госномера авто:*\n{info_saveru_fio['result']['car_plate_list'][0]}",
-            parse_mode="Markdown"
-        )
+        for i in range(len(info_saveru_fio['result']['name'])):
+
+            text = f"*Ответ №{i+1}*\n\n"
+            text += f"*Возможные имена:*\n{info_saveru_fio['result']['name'][i].strip(', ')}\n\n"
+            if info_saveru_fio['result']['birthday_list'][i] != '':
+                text += f"*Возможные дни рождения:*\n{info_saveru_fio['result']['birthday_list'][i].strip(', ')}\n\n"
+            if info_saveru_fio['result']['address_list'][i] != '':
+                text += f"*Возможные адреса:*\n`{info_saveru_fio['result']['address_list'][i].strip(', ')}`\n\n"
+            if info_saveru_fio['result']['email_list'][i] != '':
+                text += f"*Возможные email-адреса:*\n{info_saveru_fio['result']['email_list'][i].strip(', ')}\n\n"
+            if info_saveru_fio['result']['car_list'][i] != '':
+                text += f"*Возможные автомобили:*\n{info_saveru_fio['result']['car_list'][i].strip(', ')}\n\n"
+            if info_saveru_fio['result']['car_plate_list'][i] != '':
+                text += f"*Возможные госномера авто:*\n{info_saveru_fio['result']['car_plate_list'][i].strip(', ')}"
+
+
+            await message.answer(
+                text,
+                parse_mode="Markdown"
+            )
     elif status == 3:
-        print(info_saveru_fio["result"])
-        document = FSInputFile('result.csv', filename='Результат')
-        await message.answer(f"<b>Запрос</b>: {fio}\n\n <b>Выявлено большое количество ответов\nОтвет по запросу реализован в виде файла:</b>")
+        document = FSInputFile('result.csv', filename='result.csv')
+        await message.answer(
+            f"Запрос: <b>{fio}</b>\n\nБольшое количество ответов\nРеализация ответа в виде файла:",
+            parse_mode='HTML'
+            )
         await bot.send_document(chat_id=message.chat.id, document=document)
 
 
@@ -328,14 +284,14 @@ async def cmd_help(message: Message):
         "<b>Примеры команд для ввода:</b>\n\n"
         + "📱 <b>Поиск по номеру телефона</b>\n"
         + "├ 📝 <b>79994492792</b> - ПРИМЕР\n"
-        + "├  Автоматический поиск по базам данных (saverudata)\n"
+        + "├ ℹ️ Поиск по базам данных (saverudata)\n"
         + "├ ℹ️ Любой формат (+7..., 8..., 9...)\n"
         + "├ 📧 Ping SMS - отправка Ping SMS\n"
         + "├ 💌 HLR - отправка HLR-запроса\n"
         + "├ 🟢 WhatsApp - переход в WhatsApp\n"
         + "└ 🔵 Telegram - переход в Telegram\n\n"
-        + " <b>Поиск по ФИО</b>\n"
-        + "├ 📝 [ФАМИЛИЯ (обязательно)] [ИМЯ (необязательно)] - ПРИМЕР ЗАПРОСА\n"
+        + "👨‍💼 <b>Поиск по ФИО</b>\n"
+        + "├ 📝 <b>[ФАМИЛИЯ (обязательно)]</b> [ИМЯ] - ПРИМЕР ЗАПРОСА\n"
         + "└ ℹ️ Поиск по базам данных (saverudata)\n\n"
         + "🆔 Поиск по IMEI\n"
         + "├ ℹ️ Узнать модель устройства\n"
@@ -343,11 +299,12 @@ async def cmd_help(message: Message):
         + "└ 🔴 Посмотреть фото в Яндексе\n\n"
         + "📡 <b>Поиск по базовой станции</b>\n"
         + "├ 📝 <b>MNC LAC CID</b> - ПРИМЕР\n"
-        + "├ ℹ️ Возможность работы со <b>списками БС</b>\n"
+        + "├ ℹ️ Работа со <b>списками БС</b>\n"
         + "├ ℹ️ MNC - 1, 2, 20, 99\n"
         + "├ ℹ️ LAC - До 8 цифр\n"
         + "├ ℹ️ CID - Неограниченное количество цифр\n"
-        + "└ 🗺️ Отображение координат <b>Базовых Станций</b>",
+        + "└ 🗺️ Отображение координат <b>БС</b>\n\n"
+        + "<b>Список команд:</b>\n\n /help - помощь по командам\n/balance - проверить баланс SMSC\n/id - получить свой Telegram ID",
         parse_mode="HTML",
     )
 

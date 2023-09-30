@@ -38,17 +38,11 @@ def push_api(lac, cid, mnc):
 
 
 def check_imei(imei):
-    response = requests.get(
-        f"https://alpha.imeicheck.com/api/modelBrandName?imei={imei}&format=json"
-    )
-
+    response = requests.get(f"https://alpha.imeicheck.com/api/modelBrandName?imei={imei}&format=json")
+    print(response)
     if response.status_code == 200:
         x = response.json()['result'].split('<br>')[:-1]
+        print(response.json())
         return x
     else:
         return f"Ошибка: {response.status_code}, {response.text}"
-
-
-
-# x = check_imei(352322311421731)
-# print(x)

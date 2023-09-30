@@ -9,4 +9,5 @@ def luhn(imei_info):
     result = (nrch + rch) % 10
     control = 10 - result
     full_imei = int(f"{imei_info}{control}")
+    print(full_imei)
     return full_imei

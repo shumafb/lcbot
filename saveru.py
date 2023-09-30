@@ -43,15 +43,7 @@ def check_fio(fio):
         + df["yandex_address_house"].astype(str)
     )
     df.drop(columns=['yandex_address_city', 'yandex_address_street', 'yandex_address_house'])
-    # Работа со столбцом адрес суши
-    df['sushi_address_full'] = (
-        df["sushi_address_city"].astype(str)
-        + ", "
-        + df["sushi_address_street"].astype(str)
-        + ", "
-        + df["sushi_address_home"].astype(str)
-    )
-    df.drop(columns=['sushi_address_city', 'sushi_address_street', 'sushi_address_home'])
+
 #   Работа со столбцом адрес билайн
     df['beeline_address_full'] = (
         df["beeline_address_city"].astype(str)
@@ -73,21 +65,20 @@ def check_fio(fio):
         + df["gibdd2_car_color"].astype(str)
     )
     df.drop(columns=['gibdd2_car_model', 'gibdd2_car_year', 'gibdd2_car_vin', 'gibdd2_car_color'])
-
-    if df.shape[0] > 10:
-        result = df.reset_index(drop=True)
-        print(result)
-        result = result_fio(result).to_csv('result.csv', index=False)
-        return {'status': 3, 'result': result}
+    print(df.empty())
+    if df.empty():
+        return {'status': 0, 'result': 'Нет данных'}
     elif df.shape[0] == 1:
+        print(result, '1')
         result = df.reset_index(drop=True)
-        print(result)
         return {'status': 1, 'result': result_fio(result).to_dict()}
     elif df.shape[0] <= 10:
         result = df.reset_index(drop=True)
         return {'status': 2, 'result': result_fio(result).to_dict()}
-    else:
-        return {'status': 0, 'result': 'Нет данных'}
+    elif df.shape[0] > 10:
+        result = df.reset_index(drop=True)
+        result = result_fio(result).to_csv('result.csv', index=False)
+        return {'status': 3, 'result': result}
 
 def result_fio(result):
     # name = [] # Имена
@@ -100,6 +91,7 @@ def result_fio(result):
     result = result.to_dict()
     for i in range(len(result['lnmatch_last_name'])):
         name = [] # Имена
+        phone_number = [] # Номера телефонов 
         birthday_list = [] # Дата рождения
         address_list = [] # Адреса
         email_list= [] # Email
@@ -114,6 +106,8 @@ def result_fio(result):
                     name.append([value[i]])
                 else:
                     name.append([value[i]])
+            if key.startswith('phone_number'):
+                phone_number.append([str(value[i])])
             if key.endswith('address_full') or key.startswith('wildberries_address') or key.startswith('gibdd2_passport_address') or key.startswith('gibdd2_address'):
                 address_list.append([value[i]])
             if key.endswith('email'):
@@ -126,6 +120,7 @@ def result_fio(result):
                 birthday_list.append([value[i]])
         result_format = {
             'name': ', '.join(list(filter(lambda item: item is not None, list(set(list(chain(*name))))))),
+            'phone_number': ', '.join(list(filter(lambda item: item is not None, list(set(list(chain(*phone_number))))))),
             "birthday_list": ', '.join(list(filter(lambda item: item is not None, list(set(list(chain(*birthday_list))))))),
             'address_list': ', '.join(list(filter(lambda item: item is not None, list(set(list(chain(*address_list))))))),
             'email_list': ', '.join(list(filter(lambda item: item is not None, list(set(list(chain(*email_list))))))),
@@ -184,7 +179,7 @@ def result_phone(result):
                 continue
             elif key.startswith("yandex_address_doorcode") and value[0] not in doorcode:
                 doorcode.append(value[0])
-            elif key.startswith("yandex_address_full") and value[0] != None:
+            elif key.startswith("yandex_address_full") and value[0] is not None:
                 yandex_address.append(value[0])
         if key.startswith("delivery2_address") and value[0] not in delivery_address:
             if key.startswith("delivery2_address_full"):
