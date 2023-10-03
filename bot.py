@@ -186,7 +186,7 @@ async def update_ping_status(callback: CallbackQuery, state: FSMContext):
     phone = set_info["phone"][-10:]
     sms_id = set_info["sms_id"]
     loop = asyncio.get_event_loop()
-    info = await loop.run_in_executor(None, smsc.update_ping_status, sms_id, phone)
+    info = await loop.run_in_executor(None, smsc.update_status, sms_id, phone)
     await callback.message.answer(
         f"Ping-запрос к номеру: <b>{info[4]}</b> \nСтоимость {info[5]} руб\nСтатус: {info[7]}\nБаланс: <b>{smsc.get_balance()} руб</b>\nДля обновления статуса нажмите кнопку 'Обновить'",
         reply_markup=kb.update_ping_status(),
@@ -200,7 +200,7 @@ async def update_hlr_status(callback: CallbackQuery, state: FSMContext):
     phone = set_info["phone"][-10:]
     sms_id = set_info["sms_id"]
     loop = asyncio.get_event_loop()
-    info = await loop.run_in_executor(None, smsc.update_hlr_status, sms_id, phone)
+    info = await loop.run_in_executor(None, smsc.update_status, sms_id, phone)
     await callback.message.answer(
         f"{info[14]}-запрос к номеру: <b>{info[12]}</b> \nСтоимость {info[13]} руб\nСтатус: {info[15]}\nБаланс: <b>{smsc.get_balance()} руб</b>\nДля обновления статуса нажмите кнопку 'Обновить'",
         reply_markup=kb.update_hlr_status(),
