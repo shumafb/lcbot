@@ -59,6 +59,7 @@ async def cmd_start(message: Message):
 
 # ВЗАИМОДЕЙСТВИЕ С БС
 
+
 @dp.message(F.text.regexp(r"^(1|2|20|99) (\d{1,8}) (\d+)"))
 async def api_locator(message: Message):
     """Принимает mnc lac cid от пользователя и направляет аргументы в Яндекс.Локатор"""
@@ -91,6 +92,7 @@ async def api_locator(message: Message):
 
 # Взаимодействие с IMEI телефона
 
+
 @dp.message(F.text.regexp(r"\b\d{14}\b"))
 async def check_imei(message: Message, state: FSMContext):
     """Взаимодействие с IMEI-номером"""
@@ -115,7 +117,9 @@ async def check_imei(message: Message, state: FSMContext):
 async def no_imei(message: Message):
     await message.answer("Если вы хотели ввести IMEI-номер, введите 14 цифр")
 
+
 # Взаимодействие с номером телефона
+
 
 @dp.message(F.text.regexp(r"^(\+7|7|8|)?\d{10}"))
 async def menu_phone(message: Message, state: FSMContext):
@@ -127,9 +131,14 @@ async def menu_phone(message: Message, state: FSMContext):
     phone = message.text[-10:]
     info = num.check_phone(phone)
     try:
-        info_saveru = await loop.run_in_executor(None, saveru.check_phone, int(f"7{phone}"))
-        print(info_saveru['ya_deli_bee_address'])
-        maybe_address = "\n".join(info_saveru["ya_deli_bee_address"]).replace("None,", "").replace('None', '')
+        info_saveru = await loop.run_in_executor(
+            None, saveru.check_phone, int(f"7{phone}")
+        )
+        maybe_address = (
+            "\n".join(info_saveru["ya_deli_bee_address"])
+            .replace("None,", "")
+            .replace("None", "")
+        )
     except FileNotFoundError:
         info_saveru = None
 
@@ -150,14 +159,12 @@ async def menu_phone(message: Message, state: FSMContext):
     await state.set_state(SetData.ph_menu)
 
 
-
 @dp.callback_query(F.data.startswith("smsc_"))
 async def smsc_action(callback: CallbackQuery, state: FSMContext):
     ph = await state.get_data()
     phone = ph["phone"][-10:]
 
     action = callback.data.split("_")[1]
-
 
     if action == "ping":
         loop = asyncio.get_event_loop()
@@ -217,58 +224,51 @@ async def search_fio(message: Message):
     fio = message.text
     info_saveru_fio = await loop.run_in_executor(None, saveru.check_fio, fio)
     status = info_saveru_fio["status"]
-    print(info_saveru_fio)
     if status == 0:
         await message.answer(
             "<b>Запрос</b>: {fio}\n\n <b>Результаты запроса:</b>\n\n Нет данных",
-            parse_mode='HTML'
+            parse_mode="HTML",
         )
     elif status == 1:
         text = f"*Имена:*\n{info_saveru_fio['result']['name'][0].strip(', ')}\n\n"
-        if info_saveru_fio['result']['phone_number'][0] != '':
-            text += f"*Номер телефона:*\n{info_saveru_fio['result']['phone_number'][0]}\n\n"
-        if info_saveru_fio['result']['birthday_list'][0] != '':
+        if info_saveru_fio["result"]["phone_number"][0] != "":
+            text += (
+                f"*Номер телефона:*\n{info_saveru_fio['result']['phone_number'][0]}\n\n"
+            )
+        if info_saveru_fio["result"]["birthday_list"][0] != "":
             text += f"*Дни рождения:*\n{info_saveru_fio['result']['birthday_list'][0].strip(', ')}\n\n"
-        if info_saveru_fio['result']['address_list'][0] != '':
+        if info_saveru_fio["result"]["address_list"][0] != "":
             text += f"*Адреса:*\n`{info_saveru_fio['result']['address_list'][0].strip(', ')}`\n\n"
-        if info_saveru_fio['result']['email_list'][0] != '':
+        if info_saveru_fio["result"]["email_list"][0] != "":
             text += f"*Email-адреса:*\n{info_saveru_fio['result']['email_list'][0].strip(', ')}\n\n"
-        if info_saveru_fio['result']['car_list'][0] != '':
-           text += f"*Автомобили:*\n{info_saveru_fio['result']['car_list'][0].strip(', ')}\n\n"
-        if info_saveru_fio['result']['car_plate_list'][0] != '':
+        if info_saveru_fio["result"]["car_list"][0] != "":
+            text += f"*Автомобили:*\n{info_saveru_fio['result']['car_list'][0].strip(', ')}\n\n"
+        if info_saveru_fio["result"]["car_plate_list"][0] != "":
             text += f"*Госномера авто:*\n{info_saveru_fio['result']['car_plate_list'][0].strip(', ')}"
 
-        await message.answer(
-            text,
-            parse_mode='Markdown'
-        )
+        await message.answer(text, parse_mode="Markdown")
     elif status == 2:
-        for i in range(len(info_saveru_fio['result']['name'])):
-
+        for i in range(len(info_saveru_fio["result"]["name"])):
             text = f"*Ответ №{i+1}*\n\n"
             text += f"*Возможные имена:*\n{info_saveru_fio['result']['name'][i].strip(', ')}\n\n"
-            if info_saveru_fio['result']['birthday_list'][i] != '':
+            if info_saveru_fio["result"]["birthday_list"][i] != "":
                 text += f"*Возможные дни рождения:*\n{info_saveru_fio['result']['birthday_list'][i].strip(', ')}\n\n"
-            if info_saveru_fio['result']['address_list'][i] != '':
+            if info_saveru_fio["result"]["address_list"][i] != "":
                 text += f"*Возможные адреса:*\n`{info_saveru_fio['result']['address_list'][i].strip(', ')}`\n\n"
-            if info_saveru_fio['result']['email_list'][i] != '':
+            if info_saveru_fio["result"]["email_list"][i] != "":
                 text += f"*Возможные email-адреса:*\n{info_saveru_fio['result']['email_list'][i].strip(', ')}\n\n"
-            if info_saveru_fio['result']['car_list'][i] != '':
+            if info_saveru_fio["result"]["car_list"][i] != "":
                 text += f"*Возможные автомобили:*\n{info_saveru_fio['result']['car_list'][i].strip(', ')}\n\n"
-            if info_saveru_fio['result']['car_plate_list'][i] != '':
+            if info_saveru_fio["result"]["car_plate_list"][i] != "":
                 text += f"*Возможные госномера авто:*\n{info_saveru_fio['result']['car_plate_list'][i].strip(', ')}"
 
-
-            await message.answer(
-                text,
-                parse_mode="Markdown"
-            )
+            await message.answer(text, parse_mode="Markdown")
     elif status == 3:
-        document = FSInputFile('result.csv', filename='result.csv')
+        document = FSInputFile("result.csv", filename="result.csv")
         await message.answer(
             f"Запрос: <b>{fio}</b>\n\nБольшое количество ответов\nРеализация ответа в виде файла:",
-            parse_mode='HTML'
-            )
+            parse_mode="HTML",
+        )
         await bot.send_document(chat_id=message.chat.id, document=document)
 
 
