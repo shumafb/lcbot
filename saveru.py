@@ -65,6 +65,7 @@ def check_fio(fio):
         + df["gibdd2_car_color"].astype(str)
     )
     df.drop(columns=['gibdd2_car_model', 'gibdd2_car_year', 'gibdd2_car_vin', 'gibdd2_car_color'])
+    print(df)
     if df.empty():
         return {'status': 0, 'result': 'Нет данных'}
     elif df.shape[0] == 1:

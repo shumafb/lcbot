@@ -223,6 +223,7 @@ async def search_fio(message: Message):
     loop = asyncio.get_event_loop()
     fio = message.text
     info_saveru_fio = await loop.run_in_executor(None, saveru.check_fio, fio)
+    print(info_saveru_fio)
     status = info_saveru_fio["status"]
     if status == 0:
         await message.answer(
