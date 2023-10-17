@@ -14,7 +14,7 @@ except ImportError:
 # Константы для настройки библиотеки
 global SMSC_LOGIN
 SMSC_LOGIN = "Mkp2019"			# логин клиента
-SMSC_PASSWORD = "mkp_2019"	# пароль
+SMSC_PASSWORD = "mkp-2023"	# пароль
 SMSC_POST = False				# использовать метод POST
 SMSC_HTTPS = False				# использовать HTTPS протокол
 SMSC_CHARSET = "utf-8"			# кодировка сообщения (windows-1251 или koi8-r), по умолчанию используется utf-8

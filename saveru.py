@@ -30,7 +30,7 @@ def check_fio(fio):
             | (df["fb_full_name"].apply(str.lower).str.contains(filter))
             | (df["avito_user_name"].apply(str.lower).str.contains(filter))
             | (df["yandex_name"].apply(str.lower).str.contains(filter))
-            | (df["mailru_full_name"].apply(str.lower).str.contains(filter))
+            # | (df["mailru_full_name"].apply(str.lower).str.contains(filter))
             | (df["delivery2_name"].apply(str.lower).str.contains(filter))
             | (df["gibdd_name"].apply(str.lower).str.contains(filter))
         ]
@@ -202,3 +202,5 @@ def result_phone(result):
         "ya_deli_bee_address": list(filter(lambda item: item is not None,list(set(list(chain(*yandex_address, *delivery_address, *beeline_address)))),)),
         }
     return result_format
+
+
