@@ -138,7 +138,7 @@ async def menu_phone(message: Message, state: FSMContext):
             "\n".join(map(str, info_saveru["ya_deli_bee_address"]))
             .replace("None,", "")
             .replace("None", "")
-        )
+        )         
     except FileNotFoundError:
         info_saveru = None
 
@@ -147,7 +147,7 @@ async def menu_phone(message: Message, state: FSMContext):
     text += f"{'🔴' if info['operator'].lower() in 'мегафон' else '🟢'} \n\n"
     if info_saveru is not None:
         text += f"📕<b>Возможные имена:</b>\n {', '.join(info_saveru['name'])}\n\n"
-        if maybe_address is True:
+        if maybe_address is True and len(maybe_address) < 1000:
             text += f"🏚️<b>Возможные адреса:</b>\n {maybe_address}\n\n"
     text += "Выберите взаимодействие с одним из сервисов."
 
