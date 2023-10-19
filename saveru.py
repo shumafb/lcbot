@@ -148,7 +148,11 @@ def check_phone(phone):
     df_filter = df_filter.drop(
         columns=["yandex_address_city", "yandex_address_street", "yandex_address_house"]
     )
-    unique_data = {"phone_number": df_filter["phone_number"].iloc[0]}
+    try:
+        unique_data = {"phone_number": df_filter["phone_number"].iloc[0]}
+    except IndexError:
+        unique_data = None
+
     for column in df_filter.columns:
         if column != "phone_number":
             unique_data[column] = list(df_filter[column].unique())
