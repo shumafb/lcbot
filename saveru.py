@@ -149,7 +149,7 @@ def check_phone(phone):
         columns=["yandex_address_city", "yandex_address_street", "yandex_address_house"]
     )
     try:
-        unique_data = {"phone_number": df_filter["phone_number"].iloc[0]}
+        unique_data = {"phone_number": phone}
     except IndexError:
         unique_data = None
 

@@ -17,8 +17,8 @@ import yapi
 import alg_luhn
 import saveru
 
-# logging.basicConfig(level=logging.INFO, filename="log/py_bot.log", filemode='w', format="%(asctime)s %(levelname)s %(message)s")
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, filename="log/py_bot.log", filemode='w', format="%(asctime)s %(levelname)s %(message)s")
+# logging.basicConfig(level=logging.INFO)
 logging.info("An Info")
 logging.error("An Error")
 
@@ -304,7 +304,7 @@ async def cmd_help(message: Message):
         + "├ ℹ️ LAC - До 8 цифр\n"
         + "├ ℹ️ CID - Неограниченное количество цифр\n"
         + "└ 🗺️ Отображение координат <b>БС</b>\n\n"
-        + "<b>Список команд:</b>\n\n /help - помощь по командам\n/balance - проверить баланс SMSC\n/id - получить свой Telegram ID",
+        + "<b>Список команд:</b>\n\n /help - помощь по командам\n/balance - проверить баланс SMSC\n/id - получить свой Telegram ID\n/log - выгрузить логи",
         parse_mode="HTML",
     )
 
@@ -326,6 +326,13 @@ async def cmd_get_id(message: Message):
     await message.answer(
         f"Твой Telegram ID: `{message.from_user.id}`", parse_mode="Markdown"
     )
+
+@dp.message(Command('log'))
+async def get_log(message:Message):
+    if message.from_user.id != 303595933:
+        return message.answer('Нет доступа')
+    document = FSInputFile('log/py_bot.log', filename='py_bot.log')
+    await bot.send_document(chat_id=message.chat.id, document=document)
 
 
 @dp.message(F.text.regexp(r"."))
