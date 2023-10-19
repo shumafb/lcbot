@@ -135,7 +135,7 @@ async def menu_phone(message: Message, state: FSMContext):
             None, saveru.check_phone, int(f"7{phone}")
         )
         maybe_address = (
-            "\n".join(info_saveru["ya_deli_bee_address"])
+            "\n".join(map(str, info_saveru["ya_deli_bee_address"]))
             .replace("None,", "")
             .replace("None", "")
         )
