@@ -17,9 +17,15 @@ def ph_menu(phone):
     '''Клавиатура для взаимодействия с номером телефона'''
     phone_menu_buttons = [
         [
-        # InlineKeyboardButton(text='📞 GetContact', callback_data='phmenu_getcontact'),
-        InlineKeyboardButton(text='📧 Ping SMS', callback_data='smsc_ping'),
-        InlineKeyboardButton(text='💌 HLR-запрос', callback_data="smsc_hlr"),
+        InlineKeyboardButton(text='🔵📧 SMSC Ping', callback_data='smsc_ping'),
+        InlineKeyboardButton(text='🔵📧 SMSC Ping ⏰', callback_data='smsc_ping_timer'),
+        ],
+        [
+        InlineKeyboardButton(text='🔵💌 SMSC HLR', callback_data="smsc_hlr"),
+        ],
+        [
+        InlineKeyboardButton(text='🔴📧 ШЛЮЗ Ping', callback_data='smsc_modem_ping'),
+        InlineKeyboardButton(text='🔴📧 ШЛЮЗ Ping ⏰', callback_data='smsc_modem_ping_timer'),
         ],
         [
         InlineKeyboardButton(text='🟢 WhatsApp', url=f'https://wa.me/+7{phone}'),
@@ -58,4 +64,22 @@ def imei_keyboard(imei_device, imei):
         ]
     ]
     keyboard = InlineKeyboardMarkup(inline_keyboard=imei_kb)
+    return keyboard
+
+def lk_smsc_keyboard():
+    smsc_keyboard = [
+        [
+        InlineKeyboardButton(text='📧 SMSC Ping', callback_data='lk_smsc_ping'),
+        InlineKeyboardButton(text='💌 SMSC Ping ⏰', callback_data="lk_smsc_ping_timer"),
+        ],
+        [
+        InlineKeyboardButton(text='📧 ШЛЮЗ Ping', callback_data='lk_smsс_modem_ping'),
+        InlineKeyboardButton(text='📧 ШЛЮЗ Ping ⏰', callback_data='lk_smsс_modem_ping_timer'),
+        ],
+        [
+        InlineKeyboardButton(text='🟣 SMSC История', url=f"https://smsc.ru/sms/"),
+        InlineKeyboardButton(text='🔴 ШЛЮЗ История', callback_data='lk_smsc_modem_history'),
+        ]
+    ]
+    keyboard = InlineKeyboardMarkup(inline_keyboard=smsc_keyboard)
     return keyboard

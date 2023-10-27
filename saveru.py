@@ -66,7 +66,8 @@ def check_fio(fio):
     )
     df.drop(columns=['gibdd2_car_model', 'gibdd2_car_year', 'gibdd2_car_vin', 'gibdd2_car_color'])
     print(df)
-    if df.empty():
+    if df.empty:
+        print('YESS111')
         return {'status': 0, 'result': 'Нет данных'}
     elif df.shape[0] == 1:
         result = df.reset_index(drop=True)
@@ -206,5 +207,3 @@ def result_phone(result):
         "ya_deli_bee_address": list(filter(lambda item: item is not None,list(set(list(chain(*yandex_address, *delivery_address, *beeline_address)))),)),
         }
     return result_format
-
-

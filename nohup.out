@@ -1,0 +1,98 @@
+/home/user/bot/lcbot/saveru.py:19: DtypeWarning: Columns (52,106,126,138,140,141) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file, header=0).replace(np.nan, "")
+/home/user/bot/lcbot/saveru.py:19: DtypeWarning: Columns (52,106,126,138,140,141) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file, header=0).replace(np.nan, "")
+/home/user/bot/lcbot/saveru.py:19: DtypeWarning: Columns (52,106,126,138,140,141) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file, header=0).replace(np.nan, "")
+/home/user/bot/lcbot/saveru.py:19: DtypeWarning: Columns (52,106,126,138,140,141) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file, header=0).replace(np.nan, "")
+/home/user/bot/lcbot/saveru.py:19: DtypeWarning: Columns (52,106,126,138,140,141) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file, header=0).replace(np.nan, "")
+/home/user/bot/lcbot/saveru.py:19: DtypeWarning: Columns (52,106,126,138,140,141) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file, header=0).replace(np.nan, "")
+/home/user/bot/lcbot/saveru.py:19: DtypeWarning: Columns (52,106,126,138,140,141) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file, header=0).replace(np.nan, "")
+/home/user/bot/lcbot/saveru.py:19: DtypeWarning: Columns (52,106,126,138,140,141) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file, header=0).replace(np.nan, "")
+/home/user/bot/lcbot/saveru.py:19: DtypeWarning: Columns (52,106,126,138,140,141) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file, header=0).replace(np.nan, "")
+/home/user/bot/lcbot/saveru.py:19: DtypeWarning: Columns (29,34,35,36,38,39,40,41,42,43,44,50,59,63,64,65,66,67,68,73,75,80,81,82,97,100,101,102,103,105,106,107,111,112,113,114,115,117,118,121,122,125,126,127,128,129,130,133,134,135,137,138,139,140,141) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file, header=0).replace(np.nan, "")
+89.42
+      phone_number  ...                         gibdd2_car_full
+6      70000026602  ...  220 ГАЗ, 1978.0, , 132 - СЕРЫЙ - СЕРЫЙ
+34     79048338804  ...                                  , , , 
+45     79048554450  ...                                  , , , 
+46     79048554728  ...                                  , , , 
+66     74953892749  ...        ГАЗ270700, 7.0, 33020070464277, 
+...            ...  ...                                     ...
+9110   79262822187  ...                                  , , , 
+9185   79298500704  ...                                  , , , 
+9197   79308120101  ...                                  , , , 
+9231   79393379929  ...                                  , , , 
+9573   79856463287  ...                                  , , , 
+
+[563 rows x 145 columns]
+{'status': 3, 'result': None}
+      phone_number  ...                         gibdd2_car_full
+6      70000026602  ...  220 ГАЗ, 1978.0, , 132 - СЕРЫЙ - СЕРЫЙ
+34     79048338804  ...                                  , , , 
+45     79048554450  ...                                  , , , 
+46     79048554728  ...                                  , , , 
+66     74953892749  ...        ГАЗ270700, 7.0, 33020070464277, 
+...            ...  ...                                     ...
+9110   79262822187  ...                                  , , , 
+9185   79298500704  ...                                  , , , 
+9197   79308120101  ...                                  , , , 
+9231   79393379929  ...                                  , , , 
+9573   79856463287  ...                                  , , , 
+
+[563 rows x 145 columns]
+{'status': 3, 'result': None}
+        phone_number  ...                                    gibdd2_car_full
+135      74953278493  ...                                             , , , 
+165      70000059469  ...  77 ВАЗ, 1995.0, ХТА21053ОS1545179, 32 - СИНИЙ ...
+310      79048323101  ...                                             , , , 
+312      70000696044  ...   СУЗУКИ ГРАНД ВИТАРА, 2013.0, JSАJТD54V00680376, 
+354      79113521182  ...                                             , , , 
+...              ...  ...                                                ...
+110206   79857799014  ...                                             , , , 
+110679   79883821214  ...                                             , , , 
+111045   79990636569  ...                                             , , , 
+111269   79999763313  ...     ФОЛЬКСВАГЕН ГОЛЬФ, 2013.0, WVWZZZАUZЕW107261, 
+111406   79275362066  ...                                             , , , 
+
+[1237 rows x 145 columns]
+{'status': 3, 'result': None}
+Empty DataFrame
+Columns: [phone_number, type, gibdd2_car_plate_number, gibdd2_car_model, gibdd2_car_year, gibdd2_base_name, gibdd2_passport_address, gibdd2_name, gibdd_plate_number, gibdd_car_model, gibdd_name, lnmatch_last_name, gibdd2_car_color, gibdd2_dateofbirth, gibdd2_passport, cdek_full_name, vk_first_name, vk_last_name, vk_email, vk_password, fb_profile_id, fb_full_name, beeline_full_name, beeline_address_city, beeline_address_street, beeline_address_house, beeline_address_house_2, beeline_address_entrance_count, beeline_address_floors_count, beeline_address_appt, beeline_inet_info, beeline_inet_mbps, beeline_latitude, beeline_longitude, rfcont_name, wildberries_name, wildberries_comment, wildberries_email, wildberries_lat, wildberries_lon, wildberries_address, rfcont_email, gibdd2_old_car_plate_number, gibdd2_car_vin, deliveryp_type, deliveryp_password, yandex_name, yandex_created_at, yandex_place_id, yandex_address_city, yandex_address_street, yandex_address_house, yandex_region_id, yandex_latitude, yandex_longitude, yandex_amount_rub, yandex_sum_orders, yandex_user_agent, fb_address1, vtb_user, pikabu_username, pikabu_email, sushi_name, sushi_date, sushi_address_city, sushi_address_street, sushi_address_home, sushi_address_apartment, sushi_address_doorphone, sushi_address_entrance, sushi_address_floor, sushi_lat, sushi_long, sushi_amount_rub, sushi_total_rub, miltor_name, miltor_email, cdek_email, yandex_address_entrance, yandex_address_floor, yandex_address_office, yandex_address_doorcode, fb_address2, fb_work, yandex_place_name, avito_user_name, avito_ad_title, avito_price, avito_city, mailru_email, mailru_full_name, mailru_age, mailru_profile, okrug_pib, okrug_birth, okrug_nazvobl, okrug_nameokrug, yandex_address_comment, avito_user_location, avito_ad_pdate, ...]
+Index: []
+
+[0 rows x 143 columns]
+YESS111
+{'status': 0, 'result': 'Нет данных'}
+     phone_number            type  ... beeline_address_full gibdd2_car_full
+194   79627620777  seq_pn_count_1  ...                 , ,           , , , 
+
+[1 rows x 123 columns]
+{'status': 1, 'result': {'name': {0: ', Виктория, Борсов Джираслан Капланович, Джираслан, борсов, Симаева'}, 'phone_number': {0: '79627620777'}, 'birthday_list': {0: ''}, 'address_list': {0: ', Дзержинск, Учебный переулок, 3'}, 'email_list': {0: ', simaevaviktoria@gmail.com, dzhiraslan.borsov@inbox.ru'}, 'car_list': {0: ''}, 'car_plate_list': {0: ''}}}
+Empty DataFrame
+Columns: [phone_number, type, gibdd2_car_plate_number, gibdd2_car_model, gibdd2_car_color, gibdd2_car_year, gibdd2_base_name, gibdd2_dateofbirth, gibdd2_passport, gibdd2_passport_address, gibdd2_name, lnmatch_last_name, cdek_full_name, beeline_full_name, beeline_address_city, beeline_address_street, beeline_address_house, beeline_address_house_2, beeline_address_entrance_count, beeline_address_floors_count, beeline_address_appt, beeline_inet_info, beeline_inet_mbps, beeline_latitude, beeline_longitude, gibdd2_car_vin, vk_first_name, vk_last_name, vk_email, vk_password, gibdd2_old_car_plate_number, fb_profile_id, fb_full_name, avito_user_name, avito_ad_title, avito_price, avito_city, rfcont_name, cdek_email, yandex_name, yandex_created_at, yandex_place_id, yandex_place_name, yandex_address_city, yandex_address_street, yandex_address_house, yandex_address_entrance, yandex_address_floor, yandex_address_office, yandex_address_doorcode, yandex_region_id, yandex_latitude, yandex_longitude, yandex_amount_rub, yandex_sum_orders, yandex_user_agent, miltor_name, miltor_email, yandex_address_comment, rfcont_email, vtb_user, gibdd2_address, gibdd_plate_number, gibdd_car_model, gibdd_name, delivery2_name, delivery2_order_id, delivery2_created_at, delivery2_products, delivery2_vendor_name, delivery2_price_vendor_rub, delivery2_price_client_rub, delivery2_user_id, delivery2_address_full, delivery2_address_street, delivery2_address_building, delivery2_address_flat_number, delivery2_address_entrance, delivery2_address_floor, delivery2_address_intercom, delivery2_address_city, delivery2_latitude, delivery2_longitude, delivery2_ip, delivery2_timezone, delivery2_pricetotal_rub, fb_address1, fb_work, wildberries_name, wildberries_comment, wildberries_email, wildberries_lat, wildberries_lon, wildberries_address, fb_address2, delivery2_email, avito_user_location, avito_ad_pdate, delivery_name, delivery_created, ...]
+Index: []
+
+[0 rows x 123 columns]
+YESS111
+{'status': 0, 'result': 'Нет данных'}
+     phone_number            type  ... beeline_address_full gibdd2_car_full
+344   79898125099  seq_pn_count_1  ...                 , ,           , , , 
+457   79898125099         lnmatch  ...                 , ,           , , , 
+
+[2 rows x 123 columns]
+{'status': 2, 'result': {'name': {0: ', борсов, Борсов Айдамиркан Хазретович, Айдамиркан Борсов', 1: ', борсов, Борсов Айдамиркан Хазретович, Айдамиркан Борсов'}, 'phone_number': {0: '79898125099', 1: '79898125099'}, 'birthday_list': {0: '', 1: ''}, 'address_list': {0: 'Республика Адыгея, Майкоп, Апшеронская улица, 2', 1: 'Республика Адыгея, Майкоп, Апшеронская улица, 2'}, 'email_list': {0: '', 1: ''}, 'car_list': {0: '', 1: ''}, 'car_plate_list': {0: '', 1: ''}}}
+10106 1293370 1
+/home/user/bot/lcbot/saveru.py:19: DtypeWarning: Columns (52,106,126,138,140,141) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file, header=0).replace(np.nan, "")
+/home/user/bot/lcbot/saveru.py:19: DtypeWarning: Columns (52,106,126,138,140,141) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file, header=0).replace(np.nan, "")
+/home/user/bot/lcbot/saveru.py:19: DtypeWarning: Columns (52,106,126,138,140,141) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file, header=0).replace(np.nan, "")

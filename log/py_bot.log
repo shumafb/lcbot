@@ -1,10 +1,5 @@
-2023-10-19 19:23:18,355 INFO An Info
-2023-10-19 19:23:18,355 ERROR An Error
-2023-10-19 19:23:18,666 INFO Start polling
-2023-10-19 19:23:18,749 INFO Run polling for bot @foodfindbot id=6523255231 - '‘Ë¯Ú'
-2023-10-19 19:23:28,587 INFO Update id=774148905 is handled. Duration 1000 ms by bot id=6523255231
-2023-10-19 19:23:38,671 INFO Update id=774148906 is handled. Duration 125 ms by bot id=6523255231
-2023-10-19 19:23:48,766 INFO Update id=774148907 is handled. Duration 188 ms by bot id=6523255231
-2023-10-19 19:23:59,890 INFO Update id=774148908 is handled. Duration 202 ms by bot id=6523255231
-2023-10-19 19:24:11,254 INFO Polling stopped
-2023-10-19 19:24:11,255 INFO Polling stopped for bot @foodfindbot id=6523255231 - '‘Ë¯Ú'
+2023-10-27 10:19:31,804 INFO An Info
+2023-10-27 10:19:31,804 ERROR An Error
+2023-10-27 10:19:32,086 INFO Start polling
+2023-10-27 10:19:32,169 INFO Run polling for bot @foodfindbot id=6523255231 - '–§–∏—à—Ç'
+2023-10-27 14:29:48,688 INFO Update id=774149119 is handled. Duration 976 ms by bot id=6523255231

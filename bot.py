@@ -16,6 +16,7 @@ import smsc_api
 import yapi
 import alg_luhn
 import saveru
+import smscenter
 
 logging.basicConfig(level=logging.INFO, filename="log/py_bot.log", filemode='w', format="%(asctime)s %(levelname)s %(message)s")
 # logging.basicConfig(level=logging.INFO)
@@ -45,6 +46,7 @@ class SetData(StatesGroup):
     ph_get = State()
     ph_menu = State()
     ph_smsc = State()
+    smsc_menu = State()
 
 
 @dp.message(Command("start"))
@@ -175,6 +177,9 @@ async def smsc_action(callback: CallbackQuery, state: FSMContext):
             reply_markup=kb.update_ping_status(),
             parse_mode="HTML",
         )
+    
+    elif action == 'ping_timer':
+        await callback.message.answer('СКОРО')
 
     elif action == "hlr":
         loop = asyncio.get_event_loop()
@@ -185,6 +190,14 @@ async def smsc_action(callback: CallbackQuery, state: FSMContext):
             reply_markup=kb.update_hlr_status(),
             parse_mode="HTML",
         )
+
+    elif action == 'modem_ping':
+        loop = asyncio.get_event_loop()
+        result = await loop.run_in_executor(None, smscenter.sent_sms, [f"7{phone}", 1])
+        await callback.message.answer(f'ОТПРАВЛЕНО НА {phone}')
+
+    elif action == 'modem_ping_timer':
+        await callback.message.answer('СКОРО')
 
 
 @dp.callback_query(F.data == "update_ping_sms_status")
@@ -231,7 +244,7 @@ async def search_fio(message: Message):
             parse_mode="HTML",
         )
     elif status == 1:
-        text = f"*Имена:*\n{info_saveru_fio['result']['name'][0].strip(', ')}\n\n"
+        text = f"Запрос: *{fio}*\n\n*Имена:*\n{info_saveru_fio['result']['name'][0].strip(', ')}\n\n"
         if info_saveru_fio["result"]["phone_number"][0] != "":
             text += (
                 f"*Номер телефона:*\n{info_saveru_fio['result']['phone_number'][0]}\n\n"
@@ -250,7 +263,7 @@ async def search_fio(message: Message):
         await message.answer(text, parse_mode="Markdown")
     elif status == 2:
         for i in range(len(info_saveru_fio["result"]["name"])):
-            text = f"*Ответ №{i+1}*\n\n"
+            text = f"*Ответ №{i+1}*\nЗапрос: *{fio}*\n\n"
             text += f"*Возможные имена:*\n{info_saveru_fio['result']['name'][i].strip(', ')}\n\n"
             if info_saveru_fio["result"]["birthday_list"][i] != "":
                 text += f"*Возможные дни рождения:*\n{info_saveru_fio['result']['birthday_list'][i].strip(', ')}\n\n"
@@ -267,7 +280,7 @@ async def search_fio(message: Message):
     elif status == 3:
         document = FSInputFile("result.csv", filename="result.csv")
         await message.answer(
-            f"Запрос: <b>{fio}</b>\n\nБольшое количество ответов\nРеализация ответа в виде файла:",
+            f"Запрос: <b>{fio}</b>\n\nБольшое количество ответов\nОтвет в виде файла:",
             parse_mode="HTML",
         )
         await bot.send_document(chat_id=message.chat.id, document=document)
@@ -307,6 +320,28 @@ async def cmd_help(message: Message):
         + "<b>Список команд:</b>\n\n /help - помощь по командам\n/balance - проверить баланс SMSC\n/id - получить свой Telegram ID\n/log - выгрузить логи",
         parse_mode="HTML",
     )
+
+@dp.message(Command('sms'))
+async def sms_lk(message: Message):
+    if message.from_user.id not in idlist:
+        return message.answer("Нет доступа")
+    await message.answer(f"Добро пожаловать в кабинет <b>SMSC | SMS-шлюз</b>\n Нажмите кнопку для взаимодействия\n⏰ - работа с таймером (скоро):",
+                         reply_markup=kb.lk_smsc_keyboard(),
+                         parse_mode='HTML')
+
+@dp.callback_query(F.data == 'lk_smsc_ping')
+async def lk_smsc_ping(message: Message, state: FSMContext):
+    await state.set_state(SetData.smsc_menu)
+    return message.answer('Введите номер или список номеров для отправки Ping-запроса через SMSC:')
+
+
+
+
+
+
+
+
+
 
 
 @dp.message(Command("balance"))
