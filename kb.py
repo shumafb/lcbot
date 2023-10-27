@@ -66,6 +66,7 @@ def imei_keyboard(imei_device, imei):
     keyboard = InlineKeyboardMarkup(inline_keyboard=imei_kb)
     return keyboard
 
+<<<<<<< HEAD
 def lk_smsc_keyboard():
     smsc_keyboard = [
         [
@@ -82,4 +83,23 @@ def lk_smsc_keyboard():
         ]
     ]
     keyboard = InlineKeyboardMarkup(inline_keyboard=smsc_keyboard)
+=======
+def smsc_lk_kb():
+    '''Клавиатура для Личного кабинета SMSC'''
+    phone_menu_buttons = [
+        [
+        InlineKeyboardButton(text='📧 Ping SMS', callback_data='smsclk_ping'),
+        InlineKeyboardButton(text='💌 HLR', callback_data="smsclk_hlr"),
+        ],
+        [
+        InlineKeyboardButton(text='📧⏰ Ping таймер', callback_data='smsclk_timer_ping'),
+        InlineKeyboardButton(text='💌⏰ HLR таймер', callback_data="smsclk_timer_hlr"),
+        ],
+        [
+        InlineKeyboardButton(text='📥 История', url=f'https://smsc.ru/sms/'),
+        InlineKeyboardButton(text='🌎 На сайт', url=f'https://smsc.ru/user/'),
+        ]
+    ]
+    keyboard = InlineKeyboardMarkup(inline_keyboard=phone_menu_buttons)
+>>>>>>> refs/remotes/origin/master
     return keyboard

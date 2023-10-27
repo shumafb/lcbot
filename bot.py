@@ -353,6 +353,18 @@ async def cmd_balance(message: Message):
         parse_mode="HTML",
     )
 
+@dp.message(Command("smsc"))
+async def smsc_lk(message: Message):
+    if message.from_user.id not in idlist:
+        return message.answer("Нет доступа")
+    await message.answer(
+        f"Привет, <b>{smsc_api.SMSC_LOGIN}</b>!\nДобро пожаловать в личный кабинет SMSC.\n\nБаланс: <b>{smsc.get_balance()} руб</b>\n\nВыбери команду или введи /help для справки",
+        reply_markup=kb.smsc_lk_kb(),
+        parse_mode='HTML',
+    )
+
+
+
 
 @dp.message(Command("id"))
 async def cmd_get_id(message: Message):
