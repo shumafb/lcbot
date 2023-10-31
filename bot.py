@@ -370,7 +370,9 @@ async def smsc_lk(message: Message):
     )
 
 
-
+@dp.message(Command('start')):
+async def cmd_start(message: Message):
+    await message.answer(f'Привет, {message.from_user.first_name}!\n\nБаланс SMSC: {smsc.get_balance()} руб.\n')
 
 @dp.message(Command("id"))
 async def cmd_get_id(message: Message):
