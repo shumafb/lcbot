@@ -1,16 +1,11 @@
-<<<<<<< HEAD
-2023-10-27 10:19:31,804 INFO An Info
-2023-10-27 10:19:31,804 ERROR An Error
-2023-10-27 10:19:32,086 INFO Start polling
-2023-10-27 10:19:32,169 INFO Run polling for bot @foodfindbot id=6523255231 - 'Ð¤Ð¸ÑˆÑ‚'
-2023-10-27 14:29:48,688 INFO Update id=774149119 is handled. Duration 976 ms by bot id=6523255231
-=======
-2023-10-19 20:58:05,510 INFO An Info
-2023-10-19 20:58:05,510 ERROR An Error
-2023-10-19 20:58:05,828 INFO Start polling
-2023-10-19 20:58:05,909 INFO Run polling for bot @foodfindbot id=6523255231 - 'Ôèøò'
-2023-10-19 20:58:07,325 INFO Update id=774148939 is handled. Duration 343 ms by bot id=6523255231
-2023-10-19 20:58:18,259 INFO Update id=774148940 is not handled. Duration 0 ms by bot id=6523255231
-2023-10-19 21:18:00,503 INFO Polling stopped for bot @foodfindbot id=6523255231 - 'Ôèøò'
-2023-10-19 21:18:00,503 INFO Polling stopped
->>>>>>> refs/remotes/origin/master
+2023-10-31 17:55:48,307 INFO An Info
+2023-10-31 17:55:48,307 ERROR An Error
+2023-10-31 17:55:48,663 INFO Start polling
+2023-10-31 17:55:48,748 INFO Run polling for bot @foodfindbot id=6523255231 - 'Ð¤Ð¸ÑˆÑ‚'
+2023-10-31 17:55:52,244 INFO Update id=774149173 is handled. Duration 636 ms by bot id=6523255231
+2023-10-31 17:55:56,171 INFO Update id=774149174 is handled. Duration 346 ms by bot id=6523255231
+2023-10-31 17:58:19,543 INFO Update id=774149175 is handled. Duration 934 ms by bot id=6523255231
+2023-10-31 17:58:21,996 INFO Update id=774149176 is handled. Duration 329 ms by bot id=6523255231
+2023-10-31 18:18:18,174 WARNING Received SIGINT signal
+2023-10-31 18:18:18,175 INFO Polling stopped for bot @foodfindbot id=6523255231 - 'Ð¤Ð¸ÑˆÑ‚'
+2023-10-31 18:18:18,176 INFO Polling stopped

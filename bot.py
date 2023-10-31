@@ -191,9 +191,15 @@ async def smsc_action(callback: CallbackQuery, state: FSMContext):
             parse_mode="HTML",
         )
 
-    elif action == 'modem_ping':
+    elif action == 'modemping':
+        print('modem_ping')
         loop = asyncio.get_event_loop()
-        result = await loop.run_in_executor(None, smscenter.sent_sms, [f"7{phone}", 1])
+        phone_info = num.check_phone(phone)
+        if phone_info['operator'].lower() == 'билайн':
+            flag = 2
+        else:
+            flag = 1
+        await loop.run_in_executor(None, smscenter.sent_sms, phone, flag)
         await callback.message.answer(f'ОТПРАВЛЕНО НА {phone}')
 
     elif action == 'modem_ping_timer':
