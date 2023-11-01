@@ -2,11 +2,9 @@ import random
 import string
 import os
 import glob
-import psutil
 
 
 def sent_sms(phone, flag=1):
-    print("HELLO")
     file_name = f'/home/user/smscenter/sms/outgoing/{flag}/{phone}-{"".join(random.choice(string.digits + string.ascii_lowercase + string.ascii_uppercase) for x in range(6))}.txt'
     with open(file_name, "w", encoding="utf-8") as file:
         x = f"To: 7{phone}\n"
@@ -17,8 +15,8 @@ def sent_sms(phone, flag=1):
 
 
 def get_message_id(file_name):
-    # file_check_name = file_name.replace('outgoing', 'sent')
-    file_check_id_name = "/Users/baypso/Documents/codespace/LACator/otstoy/test.txt"
+    file_check_id_name = file_name.replace('outgoing', 'sent')
+    # file_check_id_name = "/Users/baypso/Documents/codespace/LACator/otstoy/test.txt"
     with open(file_check_id_name, "r", encoding="utf-8") as file:
         lines = file.readlines()
         for i in lines:

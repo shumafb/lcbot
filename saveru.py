@@ -1,13 +1,14 @@
 import hashlib
-import re
+import os
+import glob
 from itertools import chain
-
 import numpy as np
 import pandas as pd
 
 pd.options.mode.chained_assignment = None
 
 
+# SAVERU
 def check_fio(fio):
     filter = None
     fio_list = fio.split()
@@ -35,27 +36,35 @@ def check_fio(fio):
             | (df["gibdd_name"].apply(str.lower).str.contains(filter))
         ]
     # Работа со столбцом адрес яндекс
-    df['yandex_address_full'] = (
+    df["yandex_address_full"] = (
         df["yandex_address_city"].astype(str)
         + ", "
         + df["yandex_address_street"].astype(str)
         + ", "
         + df["yandex_address_house"].astype(str)
     )
-    df.drop(columns=['yandex_address_city', 'yandex_address_street', 'yandex_address_house'])
+    df.drop(
+        columns=["yandex_address_city", "yandex_address_street", "yandex_address_house"]
+    )
 
-#   Работа со столбцом адрес билайн
-    df['beeline_address_full'] = (
+    #   Работа со столбцом адрес билайн
+    df["beeline_address_full"] = (
         df["beeline_address_city"].astype(str)
         + ", "
         + df["beeline_address_street"].astype(str)
         + ", "
         + df["beeline_address_house"].astype(str)
     )
-    df.drop(columns=['beeline_address_city', 'beeline_address_street', 'beeline_address_house'])
+    df.drop(
+        columns=[
+            "beeline_address_city",
+            "beeline_address_street",
+            "beeline_address_house",
+        ]
+    )
 
-# Работа с авто гибдд
-    df['gibdd2_car_full'] = (
+    # Работа с авто гибдд
+    df["gibdd2_car_full"] = (
         df["gibdd2_car_model"].astype(str)
         + ", "
         + df["gibdd2_car_year"].astype(str)
@@ -64,71 +73,133 @@ def check_fio(fio):
         + ", "
         + df["gibdd2_car_color"].astype(str)
     )
-    df.drop(columns=['gibdd2_car_model', 'gibdd2_car_year', 'gibdd2_car_vin', 'gibdd2_car_color'])
-    print(df)
+    df.drop(
+        columns=[
+            "gibdd2_car_model",
+            "gibdd2_car_year",
+            "gibdd2_car_vin",
+            "gibdd2_car_color",
+        ]
+    )
     if df.empty:
-        print('YESS111')
-        return {'status': 0, 'result': 'Нет данных'}
+        print("YESS111")
+        return {"status": 0, "result": "Нет данных"}
     elif df.shape[0] == 1:
         result = df.reset_index(drop=True)
-        return {'status': 1, 'result': result_fio(result).to_dict()}
+        return {"status": 1, "result": result_fio(result).to_dict()}
     elif df.shape[0] <= 10:
         result = df.reset_index(drop=True)
-        return {'status': 2, 'result': result_fio(result).to_dict()}
+        return {"status": 2, "result": result_fio(result).to_dict()}
     elif df.shape[0] > 10:
         result = df.reset_index(drop=True)
-        result = result_fio(result).to_csv('result.csv', index=False)
-        return {'status': 3, 'result': result}
+        result = result_fio(result).to_csv("result.csv", index=False)
+        return {"status": 3, "result": result}
+
 
 def result_fio(result):
-    # name = [] # Имена
-    # birthday_list = [] # Дата рождения
-    # address_list = [] # Адреса
-    # email_list= [] # Email
-    # car_list = [] # Авто
-    # car_plate_list = [] # Госномера
     result_list = []
     result = result.to_dict()
-    for i in range(len(result['lnmatch_last_name'])):
-        name = [] # Имена
-        phone_number = [] # Номера телефонов 
-        birthday_list = [] # Дата рождения
-        address_list = [] # Адреса
-        email_list= [] # Email
-        car_list = [] # Авто
-        car_plate_list = [] # Госномера
+    for i in range(len(result["lnmatch_last_name"])):
+        name = []  # Имена
+        phone_number = []  # Номера телефонов
+        birthday_list = []  # Дата рождения
+        address_list = []  # Адреса
+        email_list = []  # Email
+        car_list = []  # Авто
+        car_plate_list = []  # Госномера
         for key, value in result.items():
-
-            if key.endswith('name'):
-                if key.startswith('okrug_nameokrug') or key.startswith('yandex_place_name') or key.endswith('vendor_name') or key.startswith('delivery_name') or key.startswith('miltor_name') or key.startswith('pikabu_username'):
+            if key.endswith("name"):
+                if (
+                    key.startswith("okrug_nameokrug")
+                    or key.startswith("yandex_place_name")
+                    or key.endswith("vendor_name")
+                    or key.startswith("delivery_name")
+                    or key.startswith("miltor_name")
+                    or key.startswith("pikabu_username")
+                ):
                     continue
-                elif key.startswith('lnmatch_last_name'):
+                elif key.startswith("lnmatch_last_name"):
                     name.append([value[i]])
                 else:
                     name.append([value[i]])
-            if key.startswith('phone_number'):
+            if key.startswith("phone_number"):
                 phone_number.append([str(value[i])])
-            if key.endswith('address_full') or key.startswith('wildberries_address') or key.startswith('gibdd2_passport_address') or key.startswith('gibdd2_address'):
+            if (
+                key.endswith("address_full")
+                or key.startswith("wildberries_address")
+                or key.startswith("gibdd2_passport_address")
+                or key.startswith("gibdd2_address")
+            ):
                 address_list.append([value[i]])
-            if key.endswith('email'):
+            if key.endswith("email"):
                 email_list.append([value[i]])
-            if key.endswith('plate_number'):
+            if key.endswith("plate_number"):
                 car_plate_list.append([value[i]])
-            if key.startswith('gibdd2_car_full'):
+            if key.startswith("gibdd2_car_full"):
                 car_list.append([value[i]])
-            if key.endswith('birth'):
+            if key.endswith("birth"):
                 birthday_list.append([value[i]])
         result_format = {
-            'name': ', '.join(list(filter(lambda item: item is not None, list(set(list(chain(*name))))))),
-            'phone_number': ', '.join(list(filter(lambda item: item is not None, list(set(list(chain(*phone_number))))))),
-            "birthday_list": ', '.join(list(filter(lambda item: item is not None, list(set(list(chain(*birthday_list))))))),
-            'address_list': ', '.join(list(filter(lambda item: item is not None, list(set(list(chain(*address_list))))))),
-            'email_list': ', '.join(list(filter(lambda item: item is not None, list(set(list(chain(*email_list))))))),
-            'car_list': ', '.join(list(filter(lambda item: item is not None, list(set(list(chain(*car_list))))))),
-            'car_plate_list': ', '.join(list(filter(lambda item: item is not None, list(set(list(chain(*car_plate_list))))))),
+            "name": ", ".join(
+                list(
+                    filter(lambda item: item is not None, list(set(list(chain(*name)))))
+                )
+            ),
+            "phone_number": ", ".join(
+                list(
+                    filter(
+                        lambda item: item is not None,
+                        list(set(list(chain(*phone_number)))),
+                    )
+                )
+            ),
+            "birthday_list": ", ".join(
+                list(
+                    filter(
+                        lambda item: item is not None,
+                        list(set(list(chain(*birthday_list)))),
+                    )
+                )
+            ),
+            "address_list": ", ".join(
+                list(
+                    filter(
+                        lambda item: item is not None,
+                        list(set(list(chain(*address_list)))),
+                    )
+                )
+            ),
+            "email_list": ", ".join(
+                list(
+                    filter(
+                        lambda item: item is not None,
+                        list(set(list(chain(*email_list)))),
+                    )
+                )
+            ),
+            "car_list": ", ".join(
+                list(
+                    filter(
+                        lambda item: item is not None, list(set(list(chain(*car_list))))
+                    )
+                )
+            ),
+            "car_plate_list": ", ".join(
+                list(
+                    filter(
+                        lambda item: item is not None,
+                        list(set(list(chain(*car_plate_list)))),
+                    )
+                )
+            ),
         }
         for key, value in result_format.items():
-            result_format[key] = value.replace(', ,', '').replace(' , ', '').replace(' ,', '').replace('  ', '')
+            result_format[key] = (
+                value.replace(", ,", "")
+                .replace(" , ", "")
+                .replace(" ,", "")
+                .replace("  ", "")
+            )
         result_list.append(result_format)
 
     return pd.DataFrame(result_list)
@@ -202,8 +273,62 @@ def result_phone(result):
                 beeline_address.append(value[0])
 
     result_format = {
-        "name": list(filter(lambda item: item is not None, list(set(list(chain(*name)))))),
-        "doorcode": list(filter(lambda item: item is not None, list(set(list(chain(*doorcode)))))),
-        "ya_deli_bee_address": list(filter(lambda item: item is not None,list(set(list(chain(*yandex_address, *delivery_address, *beeline_address)))),)),
-        }
+        "name": list(
+            filter(lambda item: item is not None, list(set(list(chain(*name)))))
+        ),
+        "doorcode": list(
+            filter(lambda item: item is not None, list(set(list(chain(*doorcode)))))
+        ),
+        "ya_deli_bee_address": list(
+            filter(
+                lambda item: item is not None,
+                list(
+                    set(
+                        list(
+                            chain(*yandex_address, *delivery_address, *beeline_address)
+                        )
+                    )
+                ),
+            )
+        ),
+    }
     return result_format
+
+
+# Sliv
+
+
+def check_sliv(fio=None, phone=None, flag=None):
+    filter = None
+    if fio != None:
+        cursor = fio.strip().lower()
+        flag = "fio"
+    elif phone != None:
+        cursor = phone[-10:]
+        flag = "phone"
+    directory = "db/sliv/*"
+    files = [os.path.abspath(f) for f in glob.glob(directory)]
+    for file in files:
+        info = {}
+        if file.endswith("xlsx" or "xls"):
+            print("EXCEL")
+            df = pd.read_excel(file, header=0)
+        elif file.endswith("csv"):
+            print("CSV")
+            df = pd.read_csv(file, header=0)
+        df['phone'] = df['phone'].str[-10:]
+        try:
+            if flag == "fio":
+                df = df.loc[df['fio'].str.lower() == cursor]
+                info[f"{file[file.find('/sliv')+6:file.index('.')]}"] = df.reset_index(drop=True).to_dict()
+                print(info)
+            elif flag == "phone":
+                df = df.loc[df["phone"] == cursor]
+                info[f"{file[file.find('/sliv')+6:file.index('.')]}"] = df.reset_index(drop=True).to_dict()
+        except KeyError:
+            pass
+        return info
+
+
+# check_sliv(fio='Яцковец Галина Викторовна')
+print(check_sliv(phone='Яцковец Галина Викторовна'))
