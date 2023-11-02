@@ -324,10 +324,10 @@ def check_sliv(fio=None, phone=None, flag=None):
                 print(info)
             elif flag == "phone":
                 df = df.loc[df["phone"] == cursor]
-                info[f"{file[file.find('/sliv')+6:file.index('.')]}"] = df.reset_index(drop=True).to_dict()
+                info[f"{file[file.find('/sliv')+6:file.index('.')]}"] = dict(filter(lambda x:x[1], (df.reset_index(drop=True).to_dict().items())))
         except KeyError:
             pass
-        return info
+    return info
 
 
 # check_sliv(fio='Яцковец Галина Викторовна')

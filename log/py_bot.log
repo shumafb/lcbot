@@ -1,11 +1,7 @@
-2023-10-31 17:55:48,307 INFO An Info
-2023-10-31 17:55:48,307 ERROR An Error
-2023-10-31 17:55:48,663 INFO Start polling
-2023-10-31 17:55:48,748 INFO Run polling for bot @foodfindbot id=6523255231 - 'Фишт'
-2023-10-31 17:55:52,244 INFO Update id=774149173 is handled. Duration 636 ms by bot id=6523255231
-2023-10-31 17:55:56,171 INFO Update id=774149174 is handled. Duration 346 ms by bot id=6523255231
-2023-10-31 17:58:19,543 INFO Update id=774149175 is handled. Duration 934 ms by bot id=6523255231
-2023-10-31 17:58:21,996 INFO Update id=774149176 is handled. Duration 329 ms by bot id=6523255231
-2023-10-31 18:18:18,174 WARNING Received SIGINT signal
-2023-10-31 18:18:18,175 INFO Polling stopped for bot @foodfindbot id=6523255231 - 'Фишт'
-2023-10-31 18:18:18,176 INFO Polling stopped
+2023-11-02 14:47:45,710 INFO An Info
+2023-11-02 14:47:45,710 ERROR An Error
+2023-11-02 14:47:46,586 INFO Start polling
+2023-11-02 14:47:46,682 INFO Run polling for bot @foodfindbot id=6523255231 - 'Фишт'
+2023-11-02 14:53:00,550 WARNING Received SIGINT signal
+2023-11-02 14:53:00,620 INFO Polling stopped for bot @foodfindbot id=6523255231 - 'Фишт'
+2023-11-02 14:53:00,620 INFO Polling stopped

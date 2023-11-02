@@ -56,6 +56,16 @@ def update_hlr_status():
     keyboard = InlineKeyboardMarkup(inline_keyboard=update_button)
     return keyboard
 
+def update_modem_ping_status():
+    '''Кнопка для взаимодействия с ping-запросом'''
+    update_button = [
+        [
+        InlineKeyboardButton(text='🔄 Обновить', callback_data='update_modem_ping_sms_status')
+        ]
+    ]
+    keyboard = InlineKeyboardMarkup(inline_keyboard=update_button)
+    return keyboard
+
 def imei_keyboard(imei_device, imei):
     imei_kb = [
         [

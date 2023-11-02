@@ -12,11 +12,11 @@ def sent_sms(phone, flag=1):
         x += "Ping: yes\n"
         x += "\ntest"
         file.write(x)
+    return file_name[file_name.find('/outgoing/')+12:]
 
 
 def get_message_id(file_name):
-    file_check_id_name = file_name.replace('outgoing', 'sent')
-    # file_check_id_name = "/Users/baypso/Documents/codespace/LACator/otstoy/test.txt"
+    file_check_id_name = f'/home/user/smscenter/sms/sent/{file_name}'
     with open(file_check_id_name, "r", encoding="utf-8") as file:
         lines = file.readlines()
         for i in lines:
@@ -24,45 +24,49 @@ def get_message_id(file_name):
                 return i.split()[1]
 
 
-def check_status(file_name):
+def check_status(message_id):
     # Поиск по файлам в папке report
+    result  = {}
     try:
         directory = '/home/user/smscenter/sms/report/*'
         files = [os.path.abspath(f) for f in glob.glob(directory)]
         for file in files:
-            info = {}
             with open(file, 'r', encoding='utf-8') as fl:
-                for line in file:
-                    if line == "test":
+                lines = fl.readlines()
+                info = {}
+                for line in lines:
+                    line = line.strip('\n')
+                    if line == "test" or line == None or line == '\n' or line == 'SMS STATUS REPORT' or line == '':
                         continue
-                    key, *value = line.split(': ')
-                    info[key] = value
-                    return info
+                    info[line.split(': ')[0]] = line.split(': ')[1:]
+                if info['Message_id'][0] == str(message_id):
+                    result = info
+                    return result
+                else:
+                    continue
     except FileNotFoundError:
         pass
-
-    # Поиск по файлам в папке sent
-    try:
-        directory = '/home/user/smscenter/sms/sent/*'
-        files = [os.path.abspath(f) for f in glob.glob(directory)]
-        for file in files:
-            info = {}
-            with open(file, 'r', encoding='utf-8') as fl:
-                for line in file:
-                    if line == "SMS STATUS REPORT":
+    if result == {}:
+      # Поиск по файлам в папке sent
+        try:
+            directory = '/home/user/smscenter/sms/sent/*'
+            files = [os.path.abspath(f) for f in glob.glob(directory)]
+            for file in files:
+                info = {}
+                with open(file, 'r', encoding='utf-8') as fl:
+                    lines = fl.readlines()
+                    for line in lines:
+                        line = line.strip('\n')
+                        if line == "test" or line == None or line == '\n' or line == 'SMS STATUS REPORT':
+                            continue
+                        key, *value = line.split(': ')
+                        info[line.split(': ')[0]] = line.split(': ')[1:]
+                    if info['Message_id'][0] == str(message_id):
+                        result = info
+                        return result
+                    else:
                         continue
-                    key, *value = line.split(': ')
-                    info[key] = value
-                    return info
-    except FileNotFoundError:
-        pass
+        except FileNotFoundError:
+            pass
 
 
-
-
-directory = '/Users/baypso/Documents/codespace/LACator/otstoy/*'
-
-
-files = [os.path.abspath(f) for f in glob.glob(directory)]
-
-print(files)

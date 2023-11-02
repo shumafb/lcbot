@@ -82,9 +82,14 @@ async def api_locator(message: Message):
         lc_list.append(f"{lac}-{cid}")
         yapi_info.append(yapi.push_api(lac=lac, cid=cid, mnc=mnc))
     for bs in yapi_info:
-        pretty_bs_list.append(
-            f"Координаты:\n{count+1}. {lac}-{cid}   |   `{bs['coord'].split('-')[0]} {bs['coord'].split('-')[1]}`"
-        )
+        if bs['coord'] != '00.000000-00.000000':
+            pretty_bs_list.append(
+                f"Координаты:\n{count+1}. {lc_list[count]}   |   `{bs['coord'].split('-')[0]} {bs['coord'].split('-')[1]}`"
+            )
+        else:
+            pretty_bs_list.append(
+                f"Координаты:\n{count+1}. {lc_list[count]}   |   БС не найдена в Яндекс.Локаторе"
+            )
         count += 1
     html_parse.constructor(bslist=yapi_info, lclist=lc_list)
     document = FSInputFile("test2.html", filename="map.html")
@@ -192,15 +197,19 @@ async def smsc_action(callback: CallbackQuery, state: FSMContext):
         )
 
     elif action == 'modemping':
-        print('modem_ping')
         loop = asyncio.get_event_loop()
         phone_info = num.check_phone(phone)
         if phone_info['operator'].lower() == 'билайн':
             flag = 2
         else:
             flag = 1
-        await loop.run_in_executor(None, smscenter.sent_sms, phone, flag)
-        await callback.message.answer(f'ОТПРАВЛЕНО НА {phone}')
+        file_name = await loop.run_in_executor(None, smscenter.sent_sms, phone, flag)
+        await state.update_data(file_name=file_name)
+        await callback.message.answer(
+            text=f'Ping отправлен на: <b>{phone}</b>\nДля обновления статуса нажмите кнопку "Обновить"',
+            reply_markup=kb.update_modem_ping_status(),
+            parse_mode='HTML'
+            )
 
     elif action == 'modem_ping_timer':
         await callback.message.answer('СКОРО')
@@ -228,10 +237,32 @@ async def update_hlr_status(callback: CallbackQuery, state: FSMContext):
     loop = asyncio.get_event_loop()
     info = await loop.run_in_executor(None, smsc.update_status, sms_id, phone)
     await callback.message.answer(
-        f"{info[14]}-запрос к номеру: <b>{info[12]}</b> \nСтоимость {info[13]} руб\nСтатус: {info[15]}\nБаланс: <b>{smsc.get_balance()} руб</b>\nДля обновления статуса нажмите кнопку 'Обновить'",
+        text=f"{info[14]}-запрос к номеру: <b>{info[12]}</b> \nСтоимость {info[13]} руб\nСтатус: {info[15]}\nБаланс: <b>{smsc.get_balance()} руб</b>\nДля обновления статуса нажмите кнопку 'Обновить'",
         reply_markup=kb.update_hlr_status(),
-        parse_mode="HTML",
+        parse_mode="HTML"
     )
+
+@dp.callback_query(F.data == 'update_modem_ping_sms_status')
+async def update_modem_ping_status(callback: CallbackQuery, state: FSMContext):
+    loop = asyncio.get_event_loop()
+    state_info = await state.get_data()
+    filename = state_info['file_name']
+    message_id = await loop.run_in_executor(None, smscenter.get_message_id, filename)
+    mod_ping_info = await loop.run_in_executor(None, smscenter.check_status, message_id)
+    print(mod_ping_info)
+    print(type(mod_ping_info))
+    if len(mod_ping_info) < 11:
+        await callback.message.answer(
+            text=f"Ping на номер {mod_ping_info['To'][0]}\nОтправлен: {mod_ping_info['Sent'][0]}\nСтатус: 🟡 Передано оператору\n\nMessage_id: {mod_ping_info['Message_id'][0]}",
+            reply_markup=kb.update_modem_ping_status(),
+            parse_mode='HTML'
+        )
+    elif len(mod_ping_info) > 11:
+        await callback.message.answer(
+            text=f"Отправлен: {mod_ping_info['Sent'][0]}\nПринято:{mod_ping_info['Received'][0]}\nСтатус: 🟢 Доставлено\n\nMessage_id: {mod_ping_info['Message_id'][0]}",
+            reply_markup=kb.update_modem_ping_status(),
+            parse_mode='HTML'
+        )
 
 
 @dp.message(F.text.regexp(r"^([А-Я]|[а-я]){3,}"))
@@ -242,7 +273,6 @@ async def search_fio(message: Message):
     loop = asyncio.get_event_loop()
     fio = message.text
     info_saveru_fio = await loop.run_in_executor(None, saveru.check_fio, fio)
-    print(info_saveru_fio)
     status = info_saveru_fio["status"]
     if status == 0:
         await message.answer(
@@ -370,7 +400,7 @@ async def smsc_lk(message: Message):
     )
 
 
-@dp.message(Command('start')):
+@dp.message(Command('start'))
 async def cmd_start(message: Message):
     await message.answer(f'Привет, {message.from_user.first_name}!\n\nБаланс SMSC: {smsc.get_balance()} руб.\n')
 
