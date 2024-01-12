@@ -96,3 +96,712 @@ YESS111
   df = pd.read_csv(file, header=0).replace(np.nan, "")
 /home/user/bot/lcbot/saveru.py:19: DtypeWarning: Columns (52,106,126,138,140,141) have mixed types. Specify dtype option on import or set low_memory=False.
   df = pd.read_csv(file, header=0).replace(np.nan, "")
+/home/user/bot/lcbot/saveru.py:20: DtypeWarning: Columns (16,25,26,27,28,29,30,31,35,38,39,41,42,43,44,47,48,49,63,64,65,66,67,69,70,71,72,85,86,88,95,96,97,98,99,100,102,105,107,115,116,117,118,119,120,121,122,123,124,125,126,127,133,136,137,138,139,140) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file, header=0).replace(np.nan, "")
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/bot.py", line 18, in <module>
+    import saveru
+  File "/home/user/bot/lcbot/saveru.py", line 6, in <module>
+    import pandas as pd
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pandas/__init__.py", line 46, in <module>
+    from pandas.core.api import (
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pandas/core/api.py", line 1, in <module>
+    from pandas._libs import (
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pandas/_libs/__init__.py", line 18, in <module>
+    from pandas._libs.interval import Interval
+  File "interval.pyx", line 1, in init pandas._libs.interval
+  File "hashtable.pyx", line 1, in init pandas._libs.hashtable
+  File "missing.pyx", line 1, in init pandas._libs.missing
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pandas/_libs/tslibs/__init__.py", line 39, in <module>
+    from pandas._libs.tslibs.conversion import localize_pydatetime
+  File "conversion.pyx", line 1, in init pandas._libs.tslibs.conversion
+  File "offsets.pyx", line 1, in init pandas._libs.tslibs.offsets
+  File "timestamps.pyx", line 1, in init pandas._libs.tslibs.timestamps
+  File "<frozen importlib._bootstrap>", line 405, in parent
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/connector.py", line 980, in _wrap_create_connection
+    return await self._loop.create_connection(*args, **kwargs)  # type: ignore[return-value]  # noqa
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1085, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1069, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 973, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 634, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 642, in _sock_connect
+    sock.connect(address)
+OSError: [Errno 101] Network is unreachable
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/client/session/aiohttp.py", line 167, in make_request
+    async with session.post(
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/client.py", line 1141, in __aenter__
+    self._resp = await self._coro
+                 ^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/client.py", line 536, in _request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/connector.py", line 540, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/connector.py", line 901, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/connector.py", line 1209, in _create_direct_connection
+    raise last_exc
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/connector.py", line 1178, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/connector.py", line 988, in _wrap_create_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Network is unreachable]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/bot.py", line 452, in <module>
+    asyncio.run(main())
+  File "/usr/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/bot.py", line 447, in main
+    await bot.delete_webhook(drop_pending_updates=True)
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/client/bot.py", line 1221, in delete_webhook
+    return await self(call, request_timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/client/bot.py", line 432, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/client/session/base.py", line 257, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/client/session/aiohttp.py", line 174, in make_request
+    raise TelegramNetworkError(method=method, message=f"{type(e).__name__}: {e}")
+aiogram.exceptions.TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Network is unreachable]
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/bot.py", line 5, in <module>
+    from aiogram import Bot, Dispatcher, F
+ModuleNotFoundError: No module named 'aiogram'
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/bot.py", line 5, in <module>
+    from aiogram import Bot, Dispatcher, F
+ModuleNotFoundError: No module named 'aiogram'
+Fatal Python error: init_import_site: Failed to import the site module
+Python runtime state: initialized
+Traceback (most recent call last):
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1149, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 982, in exec_module
+  File "<frozen site>", line 635, in <module>
+  File "<frozen site>", line 628, in main
+  File "<frozen site>", line 567, in execsitecustomize
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1149, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1032, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1130, in get_data
+KeyboardInterrupt
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:12:53'], 'Sending_time': ['3'], 'Message_id': ['0'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'From': ['79284676057'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-11-10 15:13:00'], 'Received': ['23-11-10 15:13:54'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['117'], 'UDH': ['no'], 'Message_id': ['1'], 'Discharge_timestamp': ['23-11-10 15:13:00'], 'Status': ['0,Ok,short message received by the SME']}
+{'From': ['79284676057'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-11-10 15:14:00'], 'Received': ['23-11-10 15:14:52'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['117'], 'UDH': ['no'], 'Message_id': ['2'], 'Discharge_timestamp': ['23-11-10 15:14:00'], 'Status': ['0,Ok,short message received by the SME']}
+['2356', '-8'] send_hlr <class 'list'>
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:17:18'], 'Sending_time': ['3'], 'Message_id': ['3'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:17:18'], 'Sending_time': ['3'], 'Message_id': ['3'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:17:18'], 'Sending_time': ['3'], 'Message_id': ['3'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:17:18'], 'Sending_time': ['3'], 'Message_id': ['3'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:17:18'], 'Sending_time': ['3'], 'Message_id': ['3'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:17:18'], 'Sending_time': ['3'], 'Message_id': ['3'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:17:18'], 'Sending_time': ['3'], 'Message_id': ['3'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:17:18'], 'Sending_time': ['3'], 'Message_id': ['3'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:17:18'], 'Sending_time': ['3'], 'Message_id': ['3'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:17:18'], 'Sending_time': ['3'], 'Message_id': ['3'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:17:18'], 'Sending_time': ['3'], 'Message_id': ['3'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79891439561'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:33:58'], 'Sending_time': ['3'], 'Message_id': ['4'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79891439561'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:33:58'], 'Sending_time': ['3'], 'Message_id': ['4'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79891439561'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:33:58'], 'Sending_time': ['3'], 'Message_id': ['4'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79891439561'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:33:58'], 'Sending_time': ['3'], 'Message_id': ['4'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79891439561'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:33:58'], 'Sending_time': ['3'], 'Message_id': ['4'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79891439561'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:33:58'], 'Sending_time': ['3'], 'Message_id': ['4'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'From': ['79891439561'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-11-10 15:33:00'], 'Received': ['23-11-10 15:34:10'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['117'], 'UDH': ['no'], 'Message_id': ['4'], 'Discharge_timestamp': ['23-11-10 15:34:00'], 'Status': ['0,Ok,short message received by the SME']}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:34:34'], 'Sending_time': ['3'], 'Message_id': ['5'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:34:34'], 'Sending_time': ['3'], 'Message_id': ['5'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:34:34'], 'Sending_time': ['3'], 'Message_id': ['5'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:34:34'], 'Sending_time': ['3'], 'Message_id': ['5'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:34:34'], 'Sending_time': ['3'], 'Message_id': ['5'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:34:34'], 'Sending_time': ['3'], 'Message_id': ['5'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:34:34'], 'Sending_time': ['3'], 'Message_id': ['5'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:34:34'], 'Sending_time': ['3'], 'Message_id': ['5'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:34:34'], 'Sending_time': ['3'], 'Message_id': ['5'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:34:34'], 'Sending_time': ['3'], 'Message_id': ['5'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:34:34'], 'Sending_time': ['3'], 'Message_id': ['5'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-10 15:34:34'], 'Sending_time': ['3'], 'Message_id': ['5'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-18 17:59:51'], 'Sending_time': ['2'], 'Message_id': ['30'], 'IMSI': ['250018601918851'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-18 17:59:51'], 'Sending_time': ['2'], 'Message_id': ['30'], 'IMSI': ['250018601918851'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-18 17:59:51'], 'Sending_time': ['2'], 'Message_id': ['30'], 'IMSI': ['250018601918851'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-18 17:59:51'], 'Sending_time': ['2'], 'Message_id': ['30'], 'IMSI': ['250018601918851'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-18 17:59:51'], 'Sending_time': ['2'], 'Message_id': ['30'], 'IMSI': ['250018601918851'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-18 17:59:51'], 'Sending_time': ['2'], 'Message_id': ['30'], 'IMSI': ['250018601918851'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-18 17:59:51'], 'Sending_time': ['2'], 'Message_id': ['30'], 'IMSI': ['250018601918851'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-18 17:59:51'], 'Sending_time': ['2'], 'Message_id': ['30'], 'IMSI': ['250018601918851'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-18 17:59:51'], 'Sending_time': ['2'], 'Message_id': ['30'], 'IMSI': ['250018601918851'], 'IMEI': ['352216043157607'], '': []}
+{'From': ['79994492792'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-11-18 17:59:00'], 'Received': ['23-11-18 18:00:02'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352216043157607'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['30'], 'Discharge_timestamp': ['23-11-18 17:59:00'], 'Status': ['0,Ok,short message received by the SME']}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-18 22:39:37'], 'Sending_time': ['7'], 'Message_id': ['37'], 'IMSI': ['250018601918851'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-18 22:39:37'], 'Sending_time': ['7'], 'Message_id': ['37'], 'IMSI': ['250018601918851'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-18 22:39:37'], 'Sending_time': ['7'], 'Message_id': ['37'], 'IMSI': ['250018601918851'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-18 22:39:37'], 'Sending_time': ['7'], 'Message_id': ['37'], 'IMSI': ['250018601918851'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-18 22:39:37'], 'Sending_time': ['7'], 'Message_id': ['37'], 'IMSI': ['250018601918851'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-18 22:39:37'], 'Sending_time': ['7'], 'Message_id': ['37'], 'IMSI': ['250018601918851'], 'IMEI': ['352216043157607'], '': []}
+{'From': ['79994492792'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-11-18 22:39:00'], 'Received': ['23-11-18 22:39:49'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352216043157607'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['37'], 'Discharge_timestamp': ['23-11-18 22:39:00'], 'Status': ['0,Ok,short message received by the SME']}
+{'From': ['79994492792'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-11-18 22:39:00'], 'Received': ['23-11-18 22:39:49'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352216043157607'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['37'], 'Discharge_timestamp': ['23-11-18 22:39:00'], 'Status': ['0,Ok,short message received by the SME']}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-11-20 11:28:32'], 'Sending_time': ['3'], 'Message_id': ['7'], 'IMSI': ['250994303165194'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-11-20 11:28:32'], 'Sending_time': ['3'], 'Message_id': ['7'], 'IMSI': ['250994303165194'], 'IMEI': ['352134043525931'], '': []}
+{'From': ['79627644460'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79037011111'], 'Sent': ['23-11-20 11:28:32'], 'Received': ['23-11-20 11:28:44'], 'Subject': ['GSM2'], 'Modem': ['GSM2'], 'IMSI': ['250994303165194'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['117'], 'UDH': ['no'], 'Message_id': ['7'], 'Discharge_timestamp': ['23-11-20 11:28:32'], 'Status': ['0,Ok,short message received by the SME']}
+{'From': ['79627644460'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79037011111'], 'Sent': ['23-11-20 12:13:13'], 'Received': ['23-11-20 12:13:25'], 'Subject': ['GSM2'], 'Modem': ['GSM2'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['10'], 'Discharge_timestamp': ['23-11-20 12:13:14'], 'Status': ['0,Ok,short message received by the SME']}
+{'From': ['79627644460'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79037011111'], 'Sent': ['23-11-20 12:13:50'], 'Received': ['23-11-20 12:14:02'], 'Subject': ['GSM2'], 'Modem': ['GSM2'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['11'], 'Discharge_timestamp': ['23-11-20 12:13:51'], 'Status': ['0,Ok,short message received by the SME']}
+{'From': ['79603260249'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79037011111'], 'Sent': ['23-11-20 17:18:17'], 'Received': ['23-11-20 17:18:29'], 'Subject': ['GSM2'], 'Modem': ['GSM2'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['12'], 'Discharge_timestamp': ['23-11-20 17:18:18'], 'Status': ['0,Ok,short message received by the SME']}
+['2384', '1', '4.9', '61.07'] send_ping
+{'To': ['79282045762'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-20 21:09:14'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79282045762'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-20 21:09:14'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79282045762'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-20 21:09:14'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79282045762'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-20 21:09:14'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79282045762'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-11-20 21:09:14'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/bot.py", line 1, in <module>
+    import asyncio
+  File "/usr/lib/python3.11/asyncio/__init__.py", line 8, in <module>
+    from .base_events import *
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 18, in <module>
+    import concurrent.futures
+  File "/usr/lib/python3.11/concurrent/futures/__init__.py", line 8, in <module>
+    from concurrent.futures._base import (FIRST_COMPLETED,
+  File "/usr/lib/python3.11/concurrent/futures/_base.py", line 7, in <module>
+    import logging
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1080, in _find_spec
+  File "<frozen importlib._bootstrap_external>", line 1504, in find_spec
+  File "<frozen importlib._bootstrap_external>", line 1476, in _get_spec
+  File "<frozen importlib._bootstrap_external>", line 1631, in find_spec
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/bot.py", line 5, in <module>
+    from aiogram import Bot, Dispatcher, F
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/__init__.py", line 5, in <module>
+    from . import enums, methods, types
+  File "<frozen importlib._bootstrap>", line 1178, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1140, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1080, in _find_spec
+  File "<frozen importlib._bootstrap_external>", line 1504, in find_spec
+  File "<frozen importlib._bootstrap_external>", line 1476, in _get_spec
+  File "<frozen importlib._bootstrap_external>", line 1631, in find_spec
+KeyboardInterrupt
+/home/user/bot/lcbot/saveru.py:22: DtypeWarning: Columns (52,106,126,138,140,141) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file, header=0).replace(np.nan, "")
+/home/user/bot/lcbot/saveru.py:22: DtypeWarning: Columns (17,21,37,38,39,107,122,125,126,129,130,131,136,137,138,139) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file, header=0).replace(np.nan, "")
+/home/user/bot/lcbot/saveru.py:22: DtypeWarning: Columns (17,21,37,38,39,107,122,125,126,129,130,131,136,137,138,139) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file, header=0).replace(np.nan, "")
+/home/user/bot/lcbot/saveru.py:22: DtypeWarning: Columns (52,106,126,138,140,141) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file, header=0).replace(np.nan, "")
+/home/user/bot/lcbot/saveru.py:22: DtypeWarning: Columns (52,106,126,138,140,141) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv(file, header=0).replace(np.nan, "")
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/bot.py", line 5, in <module>
+    from aiogram import Bot, Dispatcher, F
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/__init__.py", line 5, in <module>
+    from . import enums, methods, types
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/methods/__init__.py", line 1, in <module>
+    from .add_sticker_to_set import AddStickerToSet
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/methods/add_sticker_to_set.py", line 5, in <module>
+    from ..types import InputSticker
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/types/__init__.py", line 333, in <module>
+    _entity.model_rebuild(
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/main.py", line 471, in model_rebuild
+    return _model_construction.complete_model_class(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_model_construction.py", line 468, in complete_model_class
+    schema = cls.__get_pydantic_core_schema__(cls, handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/main.py", line 557, in __get_pydantic_core_schema__
+    return __handler(__source)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_schema_generation_shared.py", line 82, in __call__
+    schema = self._handler(__source_type)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py", line 448, in generate_schema
+    schema = self._generate_schema(obj)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py", line 689, in _generate_schema
+    return self._model_schema(obj)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py", line 519, in _model_schema
+    {k: self._generate_md_field_schema(k, v, decorators) for k, v in fields.items()},
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py", line 519, in <dictcomp>
+    {k: self._generate_md_field_schema(k, v, decorators) for k, v in fields.items()},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py", line 853, in _generate_md_field_schema
+    common_field = self._common_field_schema(name, field_info, decorators)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py", line 905, in _common_field_schema
+    schema = self._apply_annotations(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py", line 1610, in _apply_annotations
+    schema = get_inner_schema(source_type)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_schema_generation_shared.py", line 82, in __call__
+    schema = self._handler(__source_type)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py", line 1572, in inner_handler
+    from_property = self._generate_schema_from_property(obj, obj)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py", line 606, in _generate_schema_from_property
+    schema = get_schema(
+             ^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/main.py", line 557, in __get_pydantic_core_schema__
+    return __handler(__source)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_schema_generation_shared.py", line 82, in __call__
+    schema = self._handler(__source_type)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py", line 689, in _generate_schema
+    return self._model_schema(obj)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py", line 519, in _model_schema
+    {k: self._generate_md_field_schema(k, v, decorators) for k, v in fields.items()},
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py", line 519, in <dictcomp>
+    {k: self._generate_md_field_schema(k, v, decorators) for k, v in fields.items()},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py", line 853, in _generate_md_field_schema
+    common_field = self._common_field_schema(name, field_info, decorators)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py", line 893, in _common_field_schema
+    if evaluated is not field_info.annotation and not has_instance_in_type(evaluated, PydanticRecursiveRef):
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_generics.py", line 349, in has_instance_in_type
+    origin_type = get_origin(type_)
+                  ^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/pydantic/_internal/_generics.py", line 219, in get_origin
+    pydantic_generic_metadata: PydanticGenericMetadata | None = getattr(v, '__pydantic_generic_metadata__', None)
+                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/typing.py", line 1273, in __getattr__
+    if '__origin__' in self.__dict__ and not _is_dunder(attr):
+                                             ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/typing.py", line 1226, in _is_dunder
+    def _is_dunder(attr):
+    
+KeyboardInterrupt
+YESS111
+YESS111
+{'To': ['79388743057'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-04 17:37:45'], 'Sending_time': ['3'], 'Message_id': ['60'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'From': ['79388743057'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-12-04 17:37:00'], 'Received': ['23-12-04 17:37:57'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['114'], 'UDH': ['no'], 'Message_id': ['60'], 'Discharge_timestamp': ['23-12-04 17:37:00'], 'Status': ['69,Error,no interworking available']}
+{'From': ['79388743057'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-12-04 17:37:00'], 'Received': ['23-12-04 17:37:57'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['114'], 'UDH': ['no'], 'Message_id': ['60'], 'Discharge_timestamp': ['23-12-04 17:37:00'], 'Status': ['69,Error,no interworking available']}
+{'From': ['79388743057'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-12-04 17:37:00'], 'Received': ['23-12-04 17:37:57'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['114'], 'UDH': ['no'], 'Message_id': ['60'], 'Discharge_timestamp': ['23-12-04 17:37:00'], 'Status': ['69,Error,no interworking available']}
+7402 46870 2
+46870
+<class 'str'>
+2
+IF CID
+15316758
+7401 22793 2
+22793
+<class 'str'>
+2
+IF CID
+15292681
+{'From': ['79094699349'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79037011111'], 'Sent': ['23-12-05 16:07:11'], 'Received': ['23-12-05 16:07:22'], 'Subject': ['GSM2'], 'Modem': ['GSM2'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['28'], 'Discharge_timestamp': ['23-12-05 16:07:12'], 'Status': ['0,Ok,short message received by the SME']}
+{'From': ['79094699349'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79037011111'], 'Sent': ['23-12-05 16:21:06'], 'Received': ['23-12-05 16:21:17'], 'Subject': ['GSM2'], 'Modem': ['GSM2'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['29'], 'Discharge_timestamp': ['23-12-05 16:21:06'], 'Status': ['0,Ok,short message received by the SME']}
+352431102039915
+{'status': 'succes', 'result': 'IMEI: 352431102039915<br>Brand: Blackview<br>Model: BV6800 Pro<br>Model Name: BV6800 Pro<br>', 'imei': '352431102039915', 'count_free_checks_today': 227223, 'readPerformance': '0.0037 seconds', 'object': {'brand': 'Blackview', 'name': 'BV6800 Pro', 'model': 'BV6800 Pro'}}
+{'From': ['79094699349'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79037011111'], 'Sent': ['23-12-05 17:08:06'], 'Received': ['23-12-05 17:08:17'], 'Subject': ['GSM2'], 'Modem': ['GSM2'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['30'], 'Discharge_timestamp': ['23-12-05 17:08:06'], 'Status': ['0,Ok,short message received by the SME']}
+YESS111
+10106 1289987 2
+1289987
+<class 'str'>
+2
+{'To': ['79094699349'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 09:56:29'], 'Sending_time': ['3'], 'Message_id': ['32'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'From': ['79094699349'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79037011111'], 'Sent': ['23-12-06 09:56:29'], 'Received': ['23-12-06 09:56:41'], 'Subject': ['GSM2'], 'Modem': ['GSM2'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['32'], 'Discharge_timestamp': ['23-12-06 09:56:29'], 'Status': ['0,Ok,short message received by the SME']}
+101 4191240 99
+4191240
+<class 'str'>
+99
+101 4103527 99
+4103527
+<class 'str'>
+99
+{'To': ['79094699349'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:41:45'], 'Sending_time': ['3'], 'Message_id': ['37'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79094699349'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:41:45'], 'Sending_time': ['3'], 'Message_id': ['37'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79094699349'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:41:45'], 'Sending_time': ['3'], 'Message_id': ['37'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'From': ['79094699349'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79037011111'], 'Sent': ['23-12-06 11:41:44'], 'Received': ['23-12-06 11:41:56'], 'Subject': ['GSM2'], 'Modem': ['GSM2'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['37'], 'Discharge_timestamp': ['23-12-06 11:41:45'], 'Status': ['0,Ok,short message received by the SME']}
+['2387', '1', '4.9', '49.57'] send_ping
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:49:33'], 'Sending_time': ['3'], 'Message_id': ['38'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:51:16'], 'Sending_time': ['4'], 'Message_id': ['39'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:51:16'], 'Sending_time': ['4'], 'Message_id': ['39'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:51:16'], 'Sending_time': ['4'], 'Message_id': ['39'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['23-12-06 11:51:16'], 'Sending_time': ['4'], 'Message_id': ['39'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'From': ['79627644460'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79037011111'], 'Sent': ['23-12-06 11:51:16'], 'Received': ['23-12-06 11:51:28'], 'Subject': ['GSM2'], 'Modem': ['GSM2'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['39'], 'Discharge_timestamp': ['23-12-06 11:51:16'], 'Status': ['0,Ok,short message received by the SME']}
+['2388', '1', '4', '45.57'] send_ping
+['2389', '1', '3.3', '42.27'] send_ping
+['2390', '1', '3.3', '38.97'] send_ping
+['2391', '1', '3.3', '35.67'] send_ping
+['2392', '1', '3.3', '32.37'] send_ping
+['2393', '1', '4', '28.37'] send_ping
+['2394', '1', '4', '24.37'] send_ping
+501 3149067 99
+3149067
+<class 'str'>
+99
+101 3149067 99
+3149067
+<class 'str'>
+99
+{'From': ['79530804879'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-12-08 17:08:00'], 'Received': ['23-12-08 17:09:11'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['87'], 'Discharge_timestamp': ['23-12-08 17:09:00'], 'Status': ['0,Ok,short message received by the SME']}
+27000 59044885 20
+59044885
+<class 'str'>
+20
+{'From': ['79530804879'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-12-08 17:08:00'], 'Received': ['23-12-08 17:09:11'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['87'], 'Discharge_timestamp': ['23-12-08 17:09:00'], 'Status': ['0,Ok,short message received by the SME']}
+['2395', '1', '4', '20.37'] send_ping
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-08 18:44:51'], 'Sending_time': ['3'], 'Message_id': ['90'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'From': ['79530804879'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-12-08 18:44:00'], 'Received': ['23-12-08 18:45:03'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['90'], 'Discharge_timestamp': ['23-12-08 18:44:00'], 'Status': ['0,Ok,short message received by the SME']}
+{'From': ['79530804879'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-12-08 18:44:00'], 'Received': ['23-12-08 18:45:03'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['90'], 'Discharge_timestamp': ['23-12-08 18:44:00'], 'Status': ['0,Ok,short message received by the SME']}
+{'From': ['79530804879'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-12-08 18:44:00'], 'Received': ['23-12-08 18:45:03'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['90'], 'Discharge_timestamp': ['23-12-08 18:44:00'], 'Status': ['0,Ok,short message received by the SME']}
+['2396', '1', '4', '16.37'] send_ping
+{'From': ['79530804879'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-12-08 20:45:00'], 'Received': ['23-12-08 20:45:45'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['92'], 'Discharge_timestamp': ['23-12-08 20:45:00'], 'Status': ['0,Ok,short message received by the SME']}
+['2397', '1', '4', '12.37'] send_ping
+{'From': ['79530804879'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-12-08 22:07:00'], 'Received': ['23-12-08 22:07:39'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['93'], 'Discharge_timestamp': ['23-12-08 22:07:00'], 'Status': ['0,Ok,short message received by the SME']}
+{'From': ['79530804879'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-12-08 22:07:00'], 'Received': ['23-12-08 22:07:39'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['93'], 'Discharge_timestamp': ['23-12-08 22:07:00'], 'Status': ['0,Ok,short message received by the SME']}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 11:54:46'], 'Sending_time': ['2'], 'Message_id': ['94'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 11:54:46'], 'Sending_time': ['2'], 'Message_id': ['94'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 11:54:46'], 'Sending_time': ['2'], 'Message_id': ['94'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'From': ['79530804879'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-12-09 11:54:00'], 'Received': ['23-12-09 11:54:58'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['94'], 'Discharge_timestamp': ['23-12-09 11:54:00'], 'Status': ['0,Ok,short message received by the SME']}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:20:41'], 'Sending_time': ['2'], 'Message_id': ['95'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:20:41'], 'Sending_time': ['2'], 'Message_id': ['95'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:20:41'], 'Sending_time': ['2'], 'Message_id': ['95'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:20:41'], 'Sending_time': ['2'], 'Message_id': ['95'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:20:41'], 'Sending_time': ['2'], 'Message_id': ['95'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:20:41'], 'Sending_time': ['2'], 'Message_id': ['95'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'From': ['79530804879'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-12-09 12:20:00'], 'Received': ['23-12-09 12:20:53'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['95'], 'Discharge_timestamp': ['23-12-09 12:20:00'], 'Status': ['0,Ok,short message received by the SME']}
+{'From': ['79530804879'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-12-09 12:20:00'], 'Received': ['23-12-09 12:20:53'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['95'], 'Discharge_timestamp': ['23-12-09 12:20:00'], 'Status': ['0,Ok,short message received by the SME']}
+{'From': ['79530804879'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['23-12-09 12:20:00'], 'Received': ['23-12-09 12:20:53'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['95'], 'Discharge_timestamp': ['23-12-09 12:20:00'], 'Status': ['0,Ok,short message received by the SME']}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:49:45'], 'Sending_time': ['3'], 'Message_id': ['96'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:49:45'], 'Sending_time': ['3'], 'Message_id': ['96'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:49:45'], 'Sending_time': ['3'], 'Message_id': ['96'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:49:45'], 'Sending_time': ['3'], 'Message_id': ['96'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:49:45'], 'Sending_time': ['3'], 'Message_id': ['96'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:49:45'], 'Sending_time': ['3'], 'Message_id': ['96'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:49:45'], 'Sending_time': ['3'], 'Message_id': ['96'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:49:45'], 'Sending_time': ['3'], 'Message_id': ['96'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:49:45'], 'Sending_time': ['3'], 'Message_id': ['96'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:49:45'], 'Sending_time': ['3'], 'Message_id': ['96'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:49:45'], 'Sending_time': ['3'], 'Message_id': ['96'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:49:45'], 'Sending_time': ['3'], 'Message_id': ['96'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:49:45'], 'Sending_time': ['3'], 'Message_id': ['96'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:49:45'], 'Sending_time': ['3'], 'Message_id': ['96'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:49:45'], 'Sending_time': ['3'], 'Message_id': ['96'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:49:45'], 'Sending_time': ['3'], 'Message_id': ['96'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79530804879'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['23-12-09 12:49:45'], 'Sending_time': ['3'], 'Message_id': ['96'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/bot.py", line 34, in <module>
+    idlist = list(map(int, idlist))
+             ^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: ''
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/bot.py", line 34, in <module>
+    idlist = list(map(int, idlist))
+             ^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: ''
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/bot.py", line 34, in <module>
+    idlist = list(map(int, idlist))
+             ^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: ''
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/bot.py", line 34, in <module>
+    idlist = list(map(int, idlist))
+             ^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: ''
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/connector.py", line 1155, in _create_direct_connection
+    hosts = await asyncio.shield(host_resolved)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/connector.py", line 874, in _resolve_host
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/resolver.py", line 33, in resolve
+    infos = await self._loop.getaddrinfo(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 867, in getaddrinfo
+    return await self.run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/socket.py", line 962, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno -2] Name or service not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/client/session/aiohttp.py", line 167, in make_request
+    async with session.post(
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/client.py", line 1141, in __aenter__
+    self._resp = await self._coro
+                 ^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/client.py", line 536, in _request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/connector.py", line 540, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/connector.py", line 901, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/connector.py", line 1169, in _create_direct_connection
+    raise ClientConnectorError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Name or service not known]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/bot.py", line 442, in <module>
+    asyncio.run(main())
+  File "/usr/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/bot.py", line 437, in main
+    await bot.delete_webhook(drop_pending_updates=True)
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/client/bot.py", line 1221, in delete_webhook
+    return await self(call, request_timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/client/bot.py", line 432, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/client/session/base.py", line 257, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/client/session/aiohttp.py", line 174, in make_request
+    raise TelegramNetworkError(method=method, message=f"{type(e).__name__}: {e}")
+aiogram.exceptions.TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Name or service not known]
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/connector.py", line 980, in _wrap_create_connection
+    return await self._loop.create_connection(*args, **kwargs)  # type: ignore[return-value]  # noqa
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1085, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1069, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 973, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 634, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 642, in _sock_connect
+    sock.connect(address)
+OSError: [Errno 101] Network is unreachable
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/client/session/aiohttp.py", line 167, in make_request
+    async with session.post(
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/client.py", line 1141, in __aenter__
+    self._resp = await self._coro
+                 ^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/client.py", line 536, in _request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/connector.py", line 540, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/connector.py", line 901, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/connector.py", line 1209, in _create_direct_connection
+    raise last_exc
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/connector.py", line 1178, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiohttp/connector.py", line 988, in _wrap_create_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Network is unreachable]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/bot.py", line 442, in <module>
+    asyncio.run(main())
+  File "/usr/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 653, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/bot.py", line 437, in main
+    await bot.delete_webhook(drop_pending_updates=True)
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/client/bot.py", line 1221, in delete_webhook
+    return await self(call, request_timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/client/bot.py", line 432, in __call__
+    return await self.session(self, method, timeout=request_timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/client/session/base.py", line 257, in __call__
+    return cast(TelegramType, await middleware(bot, method))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/client/session/aiohttp.py", line 174, in make_request
+    raise TelegramNetworkError(method=method, message=f"{type(e).__name__}: {e}")
+aiogram.exceptions.TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Network is unreachable]
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['24-01-10 10:45:30'], 'Sending_time': ['3'], 'Message_id': ['135'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['24-01-10 10:45:30'], 'Sending_time': ['3'], 'Message_id': ['135'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['24-01-10 10:45:30'], 'Sending_time': ['3'], 'Message_id': ['135'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['24-01-10 10:45:30'], 'Sending_time': ['3'], 'Message_id': ['135'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['24-01-10 10:45:30'], 'Sending_time': ['3'], 'Message_id': ['135'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['24-01-10 10:45:30'], 'Sending_time': ['3'], 'Message_id': ['135'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['24-01-10 10:45:30'], 'Sending_time': ['3'], 'Message_id': ['135'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'To': ['79994492792'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM1'], 'Sent': ['24-01-10 10:45:30'], 'Sending_time': ['3'], 'Message_id': ['135'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], '': []}
+{'From': ['79994492792'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['24-01-10 10:45:00'], 'Received': ['24-01-10 10:45:42'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['119'], 'UDH': ['no'], 'Message_id': ['135'], 'Discharge_timestamp': ['24-01-10 10:45:00'], 'Status': ['0,Ok,short message received by the SME']}
+13611 93617184 2
+93617184
+<class 'str'>
+2
+3630 11766 2
+11766
+<class 'str'>
+2
+IF CID
+15281654
+4775 120376979 2
+120376979
+<class 'str'>
+2
+4737 9983 2
+9983
+<class 'str'>
+2
+4737 9983 2
+9983
+<class 'str'>
+2
+4775 120376979 2
+120376979
+<class 'str'>
+2
+4737 23730 2
+23730
+<class 'str'>
+2
+IF CID
+15293618
+4775 120376978 2
+120376978
+<class 'str'>
+2
+4737 99832 2
+99832
+<class 'str'>
+2
+IF CID
+244418040
+4775 120376979 2
+120376979
+<class 'str'>
+2
+4775 120376978 2
+120376978
+<class 'str'>
+2
+4737 998322 2
+998322
+<class 'str'>
+2
+4775 120376978 2
+120376978
+<class 'str'>
+2
+4737 9983 2
+9983
+<class 'str'>
+2
+4775 120376979 2
+120376979
+<class 'str'>
+2
+4775 120376978 2
+120376978
+<class 'str'>
+2
+44542 31882 20
+31882
+<class 'str'>
+20
+IF CID
+44542 203 20
+203
+<class 'str'>
+20
+44542 203 20
+203
+<class 'str'>
+20
+47198 9441 20
+9441
+<class 'str'>
+20
+['2406', '1', '3.95', '17.67'] send_ping
+{'From': ['79994492792'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79184330011'], 'Sent': ['24-01-11 18:59:00'], 'Received': ['24-01-11 18:59:22'], 'Subject': ['GSM1'], 'Modem': ['GSM1'], 'IMSI': ['250018601918851'], 'IMEI': ['352134043525931'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['119'], 'UDH': ['no'], 'Message_id': ['140'], 'Discharge_timestamp': ['24-01-11 18:59:00'], 'Status': ['0,Ok,short message received by the SME']}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['24-01-11 19:02:18'], 'Sending_time': ['3'], 'Message_id': ['47'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['24-01-11 19:02:18'], 'Sending_time': ['3'], 'Message_id': ['47'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'To': ['79627644460'], 'Report': ['yes'], 'Ping': ['yes'], 'Modem': ['GSM2'], 'Sent': ['24-01-11 19:02:18'], 'Sending_time': ['3'], 'Message_id': ['47'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], '': []}
+{'From': ['79627644460'], 'From_TOA': ['91 international, ISDN/telephone'], 'From_SMSC': ['79037011111'], 'Sent': ['24-01-11 19:02:18'], 'Received': ['24-01-11 19:02:29'], 'Subject': ['GSM2'], 'Modem': ['GSM2'], 'IMSI': ['250994303165194'], 'IMEI': ['352216043157607'], 'Report': ['no'], 'Alphabet': ['ISO'], 'Length': ['118'], 'UDH': ['no'], 'Message_id': ['47'], 'Discharge_timestamp': ['24-01-11 19:02:18'], 'Status': ['0,Ok,short message received by the SME']}
+['2407', '1', '4.9', '12.77'] send_ping

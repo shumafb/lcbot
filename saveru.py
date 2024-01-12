@@ -14,8 +14,10 @@ def check_fio(fio):
     fio_list = fio.split()
     fio = fio_list[0].lower()
     fio_hash = hashlib.md5(fio.lower().encode()).hexdigest()
-    if len(fio_list) > 1:
+    if len(fio_list) == 2:
         filter = fio_list[1].lower()
+    elif len(fio_list) == 3:
+        filter = f"{fio_list[1].lower()} {fio_list[2].lower()}"
     file = f"db/dbln/{fio_hash[0:1]}/{fio_hash[1:2]}/{fio_hash[0:4]}.csv"
     df = pd.read_csv(file, header=0).replace(np.nan, "")
     df = df.loc[df["lnmatch_last_name"] == fio.lower()]
@@ -36,17 +38,6 @@ def check_fio(fio):
             | (df["gibdd_name"].apply(str.lower).str.contains(filter))
         ]
     # Работа со столбцом адрес яндекс
-    df["yandex_address_full"] = (
-        df["yandex_address_city"].astype(str)
-        + ", "
-        + df["yandex_address_street"].astype(str)
-        + ", "
-        + df["yandex_address_house"].astype(str)
-    )
-    df.drop(
-        columns=["yandex_address_city", "yandex_address_street", "yandex_address_house"]
-    )
-
     #   Работа со столбцом адрес билайн
     df["beeline_address_full"] = (
         df["beeline_address_city"].astype(str)
@@ -210,16 +201,16 @@ def check_phone(phone):
     file = f"db/dbpn/{sphone[0:2]}/{sphone[2:4]}/{sphone[4:6]}/{sphone[6:8]}.csv"
     df = pd.read_csv(file, header=0).replace(np.nan, None)
     df_filter = df.loc[df["phone_number"] == phone]
-    df_filter["yandex_address_full"] = (
-        df_filter["yandex_address_city"].astype(str)
-        + ", "
-        + df_filter["yandex_address_street"].astype(str)
-        + ", "
-        + df_filter["yandex_address_house"].astype(str)
-    )
-    df_filter = df_filter.drop(
-        columns=["yandex_address_city", "yandex_address_street", "yandex_address_house"]
-    )
+    # df_filter["yandex_address_full"] = (
+    #     df_filter["yandex_address_city"].astype(str)
+    #     + ", "
+    #     + df_filter["yandex_address_street"].astype(str)
+    #     + ", "
+    #     + df_filter["yandex_address_house"].astype(str)
+    # )
+    # df_filter = df_filter.drop(
+    #     columns=["yandex_address_city", "yandex_address_street", "yandex_address_house"]
+    # )
     try:
         unique_data = {"phone_number": phone}
     except IndexError:
@@ -329,6 +320,3 @@ def check_sliv(fio=None, phone=None, flag=None):
             pass
     return info
 
-
-# check_sliv(fio='Яцковец Галина Викторовна')
-print(check_sliv(phone='Яцковец Галина Викторовна'))

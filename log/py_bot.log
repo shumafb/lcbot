@@ -1,7 +1,157 @@
-2023-11-02 14:47:45,710 INFO An Info
-2023-11-02 14:47:45,710 ERROR An Error
-2023-11-02 14:47:46,586 INFO Start polling
-2023-11-02 14:47:46,682 INFO Run polling for bot @foodfindbot id=6523255231 - 'Фишт'
-2023-11-02 14:53:00,550 WARNING Received SIGINT signal
-2023-11-02 14:53:00,620 INFO Polling stopped for bot @foodfindbot id=6523255231 - 'Фишт'
-2023-11-02 14:53:00,620 INFO Polling stopped
+2024-01-12 12:11:22,547 INFO An Info
+2024-01-12 12:11:22,547 ERROR An Error
+2024-01-12 12:11:22,845 INFO Start polling
+2024-01-12 12:11:22,924 INFO Run polling for bot @foodfindbot id=6523255231 - 'Фишт'
+2024-01-12 12:12:25,339 INFO Update id=774150669 is not handled. Duration 0 ms by bot id=6523255231
+2024-01-12 12:12:25,339 ERROR Cause exception while process update id=774150669 by bot id=6523255231
+KeyError: 'phone'
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/dispatcher.py", line 308, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/dispatcher.py", line 157, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/middlewares/error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/middlewares/user_context.py", line 27, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/fsm/middleware.py", line 41, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/event/telegram.py", line 120, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/event/handler.py", line 42, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/dispatcher.py", line 275, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 116, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 111, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 136, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/event/telegram.py", line 120, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/event/handler.py", line 42, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/bot.py", line 236, in update_ping_status
+    phone = set_info["phone"][-10:]
+            ~~~~~~~~^^^^^^^^^
+KeyError: 'phone'
+2024-01-12 12:12:25,427 INFO Update id=774150670 is not handled. Duration 0 ms by bot id=6523255231
+2024-01-12 12:12:25,427 ERROR Cause exception while process update id=774150670 by bot id=6523255231
+KeyError: 'phone'
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/dispatcher.py", line 308, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/dispatcher.py", line 157, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/middlewares/error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/middlewares/user_context.py", line 27, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/fsm/middleware.py", line 41, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/event/telegram.py", line 120, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/event/handler.py", line 42, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/dispatcher.py", line 275, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 116, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 111, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 136, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/event/telegram.py", line 120, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/event/handler.py", line 42, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/bot.py", line 236, in update_ping_status
+    phone = set_info["phone"][-10:]
+            ~~~~~~~~^^^^^^^^^
+KeyError: 'phone'
+2024-01-12 12:12:48,722 INFO Update id=774150671 is handled. Duration 357 ms by bot id=6523255231
+2024-01-12 12:13:54,004 INFO Update id=774150672 is handled. Duration 718 ms by bot id=6523255231
+2024-01-12 13:01:03,100 INFO Update id=774150673 is handled. Duration 715 ms by bot id=6523255231
+2024-01-12 13:01:05,330 INFO Update id=774150674 is handled. Duration 466 ms by bot id=6523255231
+2024-01-12 13:01:10,258 INFO Update id=774150675 is not handled. Duration 0 ms by bot id=6523255231
+2024-01-12 13:01:10,258 ERROR Cause exception while process update id=774150675 by bot id=6523255231
+FileNotFoundError: [Errno 2] No such file or directory: '/home/user/smscenter/sms/sent/9994492792-uQNK1p.txt'
+Traceback (most recent call last):
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/dispatcher.py", line 308, in _process_update
+    response = await self.feed_update(bot, update, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/dispatcher.py", line 157, in feed_update
+    response = await self.update.wrap_outer_middleware(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/middlewares/error.py", line 25, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/middlewares/user_context.py", line 27, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/fsm/middleware.py", line 41, in __call__
+    return await handler(event, data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/event/telegram.py", line 120, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/event/handler.py", line 42, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/dispatcher.py", line 275, in _listen_update
+    return await self.propagate_event(update_type=update_type, event=event, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 116, in propagate_event
+    return await observer.wrap_outer_middleware(_wrapped, event=event, data=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 111, in _wrapped
+    return await self._propagate_event(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/router.py", line 136, in _propagate_event
+    response = await observer.trigger(event, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/event/telegram.py", line 120, in trigger
+    return await wrapped_inner(event, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/venv/lib/python3.11/site-packages/aiogram/dispatcher/event/handler.py", line 42, in call
+    return await wrapped()
+           ^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/bot.py", line 265, in update_modem_ping_status
+    message_id = await loop.run_in_executor(None, smscenter.get_message_id, filename)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/bot/lcbot/smscenter.py", line 20, in get_message_id
+    with open(file_check_id_name, "r", encoding="utf-8") as file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/user/smscenter/sms/sent/9994492792-uQNK1p.txt'
+2024-01-12 13:01:22,290 INFO Update id=774150676 is handled. Duration 296 ms by bot id=6523255231
+2024-01-12 13:01:25,833 INFO Update id=774150677 is handled. Duration 108 ms by bot id=6523255231
