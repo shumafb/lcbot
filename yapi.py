@@ -1,7 +1,7 @@
 import requests
 import json
 
-with open("source/info.json", "r", encoding="utf-8") as file:
+with open("/home/user/bot/lcbot/source/info.json", "r", encoding="utf-8") as file:
     file = json.load(file)
 
 YA_TOKEN = file["yandexl_token"]

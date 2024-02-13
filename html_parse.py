@@ -11,7 +11,7 @@ def constructor(bslist, lclist):
     """Функция принимает список словарей с характеристиками базовых станций,
     возвращает тело html-страницы"""
     operators = {1: "red", 2: "green", 20: "black", 99: "yellow"}
-    with open("main.html", "r", encoding="utf-8") as file:
+    with open("/home/user/bot/lcbot/main.html", "r", encoding="utf-8") as file:
         soup = BeautifulSoup(file, "html.parser")
 
     coords = []
@@ -46,7 +46,7 @@ def constructor(bslist, lclist):
     for bs in bslist:
         operator_color = operators[int(bs['operator'])]
         circles.append(
-            f"    L.circle(coords{count}, {{color: '{operator_color}', fillcolor: '{operator_color}', fillOpacity: 0.5, radius: 600}}).addTo(map);"
+            f"    L.circle(coords{count}, {{color: '{operator_color}', fillcolor: '{operator_color}', fillOpacity: 0.3, radius: 600}}).addTo(map);"
         )
         count += 1
 
@@ -57,6 +57,6 @@ def constructor(bslist, lclist):
     element.string = main + "\n\n" + coords + "\n\n" + markers + "\n\n" + circles
 
     # Запись в файл
-    with open("test2.html", "w", encoding="utf-8") as file:
+    with open("/home/user/bot/lcbot/test2.html", "w", encoding="utf-8") as file:
         file.write(str(soup))
 

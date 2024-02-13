@@ -18,7 +18,7 @@ def check_fio(fio):
         filter = fio_list[1].lower()
     elif len(fio_list) == 3:
         filter = f"{fio_list[1].lower()} {fio_list[2].lower()}"
-    file = f"db/dbln/{fio_hash[0:1]}/{fio_hash[1:2]}/{fio_hash[0:4]}.csv"
+    file = f"/home/user/bot/lcbot/db/dbln/{fio_hash[0:1]}/{fio_hash[1:2]}/{fio_hash[0:4]}.csv"
     df = pd.read_csv(file, header=0).replace(np.nan, "")
     df = df.loc[df["lnmatch_last_name"] == fio.lower()]
     if filter is not None:
@@ -198,7 +198,7 @@ def result_fio(result):
 
 def check_phone(phone):
     sphone = str(phone)
-    file = f"db/dbpn/{sphone[0:2]}/{sphone[2:4]}/{sphone[4:6]}/{sphone[6:8]}.csv"
+    file = f"/home/user/bot/lcbot/db/dbpn/{sphone[0:2]}/{sphone[2:4]}/{sphone[4:6]}/{sphone[6:8]}.csv"
     df = pd.read_csv(file, header=0).replace(np.nan, None)
     df_filter = df.loc[df["phone_number"] == phone]
     # df_filter["yandex_address_full"] = (
@@ -297,7 +297,7 @@ def check_sliv(fio=None, phone=None, flag=None):
     elif phone != None:
         cursor = phone[-10:]
         flag = "phone"
-    directory = "db/sliv/*"
+    directory = "/home/user/bot/lcbot/db/sliv/*"
     files = [os.path.abspath(f) for f in glob.glob(directory)]
     for file in files:
         info = {}

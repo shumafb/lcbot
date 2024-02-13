@@ -10,7 +10,7 @@ def sent_sms(phone, flag=1):
         x = f"To: 7{phone}\n"
         x += "Report: yes\n"
         x += "Ping: yes\n"
-        x += "\ntest"
+        x += "\n "
         file.write(x)
     return file_name[file_name.find("/outgoing/") + 12:]
 
@@ -85,7 +85,7 @@ def check_status(message_id, filename):
                     for line in lines:
                         line = line.strip("\n")
                         if (
-                            line == "test"
+                            line == " "
                             or line == None
                             or line == "\n"
                             or line == "SMS STATUS REPORT"

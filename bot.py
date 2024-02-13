@@ -18,17 +18,18 @@ import yapi
 import alg_luhn
 import saveru
 import smscenter
+import pw_preview
 
-logging.basicConfig(level=logging.INFO, filename="log/py_bot.log", filemode='w', format="%(asctime)s %(levelname)s %(message)s")
+logging.basicConfig(level=logging.INFO, filename="/home/user/bot/lcbot/log/py_bot.log", filemode='w', format="%(asctime)s %(levelname)s %(message)s")
 # logging.basicConfig(level=logging.INFO)
 logging.info("An Info")
 logging.error("An Error")
 
 
-with open("source/info.json", "r", encoding="utf-8") as file:
+with open("/home/user/bot/lcbot/source/info.json", "r", encoding="utf-8") as file:
     file = json.load(file)
 
-with open("source/id_list.txt", "r", encoding="utf-8") as idlist:
+with open("/home/user/bot/lcbot/source/id_list.txt", "r", encoding="utf-8") as idlist:
     idlist = idlist.read()
     idlist = idlist.split("\n")
     idlist = list(map(int, idlist))
@@ -83,8 +84,11 @@ async def api_locator(message: Message):
             )
         count += 1
     html_parse.constructor(bslist=yapi_info, lclist=lc_list)
-    document = FSInputFile("test2.html", filename="map.html")
+    await pw_preview.main()
+    photo = FSInputFile('/home/user/bot/lcbot/source/screen.png', filename='sceen.png')
+    document = FSInputFile("/home/user/bot/lcbot/test2.html", filename="map.html")
     await message.answer("\n".join(pretty_bs_list), parse_mode="Markdown")
+    await bot.send_photo(chat_id=message.chat.id, photo=photo)
     await bot.send_document(chat_id=message.chat.id, document=document)
 
 
@@ -328,7 +332,7 @@ async def search_fio(message: Message):
 
             await message.answer(text, parse_mode='Markdown')
     elif status == 3:
-        document = FSInputFile("result.csv", filename="result.csv")
+        document = FSInputFile("/home/user/bot/lcbot/result.csv", filename="result.csv")
         await message.answer(
             f"Запрос: {fio}\n\nБольшое количество ответов\nОтвет в виде файла:",
         )
@@ -411,7 +415,7 @@ async def cmd_get_id(message: Message):
 async def get_log(message:Message):
     if message.from_user.id != 303595933:
         return message.answer('Нет доступа')
-    document = FSInputFile('log/py_bot.log', filename='py_bot.log')
+    document = FSInputFile('/home/user/bot/lcbot/log/py_bot.log', filename='py_bot.log')
     await bot.send_document(chat_id=message.chat.id, document=document)
 
 @dp.message(Command('rebootsms'))
