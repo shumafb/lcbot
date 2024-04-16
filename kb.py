@@ -8,7 +8,7 @@ def ph_menu(phone):
         InlineKeyboardButton(text='🟠📧 SMSC Ping', callback_data='smsc_ping'),
         ],
         [
-        InlineKeyboardButton(text='⛔📧 ШЛЮЗ Ping', callback_data='smsc_modemping'),
+        InlineKeyboardButton(text='🟣📧 ШЛЮЗ Ping', callback_data='smsc_modemping'),
         ],
         [
         InlineKeyboardButton(text='🟢 WhatsApp', url=f'https://wa.me/+7{phone}'),
@@ -33,7 +33,8 @@ def update_modem_ping_status():
     '''Кнопка для взаимодействия с ping-запросом'''
     update_button = [
         [
-        InlineKeyboardButton(text='🔄 Обновить', callback_data='update_modem_ping_sms_status')
+        InlineKeyboardButton(text='🔄 Обновить', callback_data='update_modem_ping_sms_status'),
+        InlineKeyboardButton(text='🏷', callback_data='update_modem_ping_list_status'),
         ]
     ]
     keyboard = InlineKeyboardMarkup(inline_keyboard=update_button)
